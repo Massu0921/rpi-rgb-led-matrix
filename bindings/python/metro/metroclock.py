@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys,os,time
-from datatime import datatime as dt
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/..'))
+from datetime import datetime as dt
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '../'))
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from PIL import Image
 
@@ -41,17 +42,18 @@ class Metroclock(object):
 
     def run(self):
         while True:
+            self.canvas.Clear()
             hour = dt.now().strftime("%H")
             minute = dt.now().strftime("%M")
             sec = dt.now().strftime("%S")
 
-            if sec % 2 = 0:
+            if int(sec) % 2 == 0:
                 text = hour + ':' + minute
             else:
                 text = hour + ' ' + minute
 
-            graphics.DrawText(self.canvs,self.clcfont,0,16,self.white,text)
-            self.canvas = matrix.SwapOnVSync(self.canvas)
+            graphics.DrawText(self.canvas,self.clcfont,0,16,self.white,text)
+            self.canvas = self.matrix.SwapOnVSync(self.canvas)
             time.sleep(0.1)
 
 if __name__ == '__main__':
