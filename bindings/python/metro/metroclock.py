@@ -5,8 +5,6 @@ from datetime import datetime as dt
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '../'))
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-from PIL import Image
-
 
 class Metroclock(object):
     #インスタンス生成時に実行
