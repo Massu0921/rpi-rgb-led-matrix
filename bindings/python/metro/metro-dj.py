@@ -30,9 +30,12 @@ class MetroDJ(object):
         with open("Resources/SetList.txt") as sl:
             self.setlist = sl.readlines()
         for i in range(len(self.setlist)):
-            self.setlist[i] = self.setlist[i].replace('\n','') 
+            self.setlist[i] = self.setlist[i].replace('\n','')
+            
+        self.setlist.append('')
+        self.setlist_len = len(self.setlist) - 1
 
-        print(self.setlist)
+        #print(self.setlist)
         #LED長さ
         self._width = self.canvas.width
         self._height = self.canvas.height
@@ -48,7 +51,7 @@ class MetroDJ(object):
         self.stopper = False
 
         # 曲番号用変数
-        self.number = 0
+        self.number = self.setlist_len
 
     # 上段
     def up_led(self):
@@ -63,7 +66,11 @@ class MetroDJ(object):
 
     # 下段
     def low_led(self):
-        self.low_text = self.setlist[self.number]
+        try:
+            self.low_text = self.setlist[self.number]
+        except:
+            print("正しい数値を入力して下さい")
+            self.number = self.setlist_len
 
     # 表示部
     def run(self):
@@ -78,6 +85,7 @@ class MetroDJ(object):
             len = graphics.DrawText(self.canvas,self.gothic,low_x,30,self.blue,self.low_text)
             if (low_x + len < 0):
                 low_x = self._width
+                
                 self.number = input("number:") - 1
 
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
