@@ -31,9 +31,9 @@ class MetroDJ(object):
         with open("Resources/SetList.txt") as sl:
             self.setlist = sl.readlines()
         for i in range(len(self.setlist)):
-            self.setlist[i] = self.setlist[i].replace('\n','')
+            self.setlist[i] = self.setlist[i].replace('\n','').replace('	','　')
             self.setlist[i] = self.setlist[i].decode('utf-8')
-
+        
         # リスト最後に空白を追加
         self.setlist.append('')
         # リスト長を取得 (-1)
