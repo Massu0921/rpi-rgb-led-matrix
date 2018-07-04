@@ -29,6 +29,8 @@ class MetroDJ(object):
         # セットリストのテキストファイル読み込み
         with open("Resources/SetList.txt") as sl:
             self.setlist = sl.readlines()
+        for i in range(len(self.setlist)):
+            self.setlist[i] = self.setlist[i].replace('\n','') 
 
         print(self.setlist)
         #LED長さ
@@ -61,7 +63,7 @@ class MetroDJ(object):
 
     # 下段
     def low_led(self):
-        self.low_text = setlist[self.number]
+        self.low_text = self.setlist[self.number]
 
     # 表示部
     def run(self):
@@ -73,14 +75,15 @@ class MetroDJ(object):
             self.low_led()
             
             graphics.DrawText(self.canvas,self.clcfont,0,16,self.white,self.up_text)
-            len = graphics.DrawText(self.canvas,self.gothic,low_x,32,self.blue,self.low_text)
+            len = graphics.DrawText(self.canvas,self.gothic,low_x,30,self.blue,self.low_text)
             if (low_x + len < 0):
                 low_x = self._width
-                self.number = input("number:")
+                self.number = input("number:") - 1
 
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
+            low_x -= 1
             time.sleep(0.02)
 
 if __name__ == '__main__':
-    metroclock = Metroclock()
+    metroclock = MetroDJ()
     metroclock.run()
