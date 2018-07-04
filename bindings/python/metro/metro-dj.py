@@ -31,8 +31,10 @@ class MetroDJ(object):
             self.setlist = sl.readlines()
         for i in range(len(self.setlist)):
             self.setlist[i] = self.setlist[i].replace('\n','')
-            
+
+        # リスト最後に空白を追加
         self.setlist.append('')
+        # リスト長を取得 (-1)
         self.setlist_len = len(self.setlist) - 1
 
         #print(self.setlist)
@@ -66,6 +68,7 @@ class MetroDJ(object):
 
     # 下段
     def low_led(self):
+        # 例外処理
         try:
             self.low_text = self.setlist[self.number]
         except:
