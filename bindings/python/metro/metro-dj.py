@@ -140,7 +140,7 @@ class GUI(TK.Frame,MetroDJ):
         self.number += 1
         self.low_x = self._width
 
-        if self.number > self.setlist_len:
+        if self.number > self.setlist_len - 1:
             self.bt_next.configure(state=TK.DISABLED)
         self.bt_back.configure(state=TK.NORMAL)
         self.bt_start.configure(state=TK.NORMAL)
