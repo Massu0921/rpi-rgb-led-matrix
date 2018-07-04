@@ -33,7 +33,7 @@ class MetroDJ(object):
         for i in range(len(self.setlist)):
             self.setlist[i] = self.setlist[i].replace('\n','').replace('	','　')
             self.setlist[i] = self.setlist[i].decode('utf-8')
-        
+
         # リスト最後に空白を追加
         self.setlist.append('')
         # リスト長を取得 (-1)
@@ -108,10 +108,10 @@ class GUI(TK.Frame,MetroDJ):
         th_led.setDaemon(True)
         th_led.start()
 
-        bt_next = TK.Button(text=u' Next ▶ ',font=("",fontsize),bg='Khaki',command=self.add)
+        bt_next = TK.Button(text=u' Next ▶▶ ',font=("",fontsize),bg='Khaki',command=self.add)
         bt_next.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_back = TK.Button(text=u' Back ◀ ',font=("",fontsize),bg='cyan',command=self.sub)
+        bt_back = TK.Button(text=u' Back ◀◀ ',font=("",fontsize),bg='cyan',command=self.sub)
         bt_back.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         bt_start = TK.Button(text=u' Start (Reset) ',font=("",fontsize),bg='green2',command=self.start)
@@ -120,29 +120,69 @@ class GUI(TK.Frame,MetroDJ):
         bt_end = TK.Button(text=u' End Message ',font=("",fontsize),bg='yellow2',command=self.end)
         bt_end.grid(row=1,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
+        #bt_pause = TK.Button(text=u' Pause ',font=("",fontsize),bg='magenta2',command=self.pause)
+        #bt_pause.grid(row=2,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+
         bt_stop = TK.Button(text=u' Stop ',font=("",fontsize),bg='IndianRed1',command=self.stop)
-        bt_stop.grid(row=2,column=0,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
+        bt_stop.grid(row=2,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
     # 曲番号加算・減算用メソッド
     def add(self):
         self.number += 1
         self.low_x = self._width
 
+        if self.number > self.setlist_len:
+            bt_next.configure(state=TK.DISABLED)
+        bt_back.configure(state=TK.NORMAL)
+        bt_start.configure(state=TK.NORMAL)
+        bt_end.configure(state=TK.NORMAL)
+        #bt_pause.configure(state=TK.DISABLED)
+        bt_stop.configure(state=TK.NORMAL)
+
     def sub(self):
         self.number -= 1
         self.low_x = self._width
+
+        bt_next.configure(state=TK.NORMAL)
+        if self.number < 0:
+            bt_back.configure(state=TK.DISABLED)
+        bt_start.configure(state=TK.NORMAL)
+        bt_end.configure(state=TK.NORMAL)
+        #bt_pause.configure(state=TK.DISABLED)
+        bt_stop.configure(state=TK.NORMAL)
 
     def start(self):
         self.number = 0
         self.low_x = self._width
 
+        bt_next.configure(state=TK.NORMAL)
+        bt_back.configure(state=TK.DISABLED)
+        bt_start.configure(state=TK.DISABLED)
+        bt_end.configure(state=TK.NORMAL)
+        #bt_pause.configure(state=TK.DISABLED)
+        bt_stop.configure(state=TK.NORMAL)
+
     def end(self):
         self.number = self.setlist_len - 1
         self.low_x = self._width
 
+        bt_next.configure(state=TK.DISABLE)
+        bt_back.configure(state=TK.NORMAL)
+        bt_start.configure(state=TK.NORMAL)
+        bt_end.configure(state=TK.DISABLED)
+        #bt_pause.configure(state=TK.DISABLED)
+        bt_stop.configure(state=TK.NORMAL)
+
     def stop(self):
         self.number = self.setlist_len
         self.low_x = self._width
+
+        bt_next.configure(state=TK.DISABLED)
+        bt_back.configure(state=TK.DISABLED)
+        bt_start.configure(state=TK.NORMAL)
+        bt_end.configure(state=TK.NORMAL)
+        #bt_pause.configure(state=TK.NORMAL)
+        bt_stop.configure(state=TK.DISABLED)
 
 if __name__ == '__main__':
     gui = GUI()
