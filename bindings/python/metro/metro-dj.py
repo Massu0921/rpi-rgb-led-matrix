@@ -91,6 +91,8 @@ class MetroDJ(object):
 
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
             self.low_x -= 1
+
+            # スクロール速度
             time.sleep(0.02)
 
 class GUI(TK.Frame,MetroDJ):
@@ -151,7 +153,7 @@ class GUI(TK.Frame,MetroDJ):
         self.low_x = self._width
 
         self.bt_next.configure(state=TK.NORMAL)
-        if self.number < 0:
+        if self.number <= 0:
             self.bt_back.configure(state=TK.DISABLED)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.NORMAL)
@@ -173,7 +175,7 @@ class GUI(TK.Frame,MetroDJ):
         self.number = self.setlist_len - 1
         self.low_x = self._width
 
-        self.bt_next.configure(state=TK.DISABLE)
+        self.bt_next.configure(state=TK.DISABLED)
         self.bt_back.configure(state=TK.NORMAL)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.DISABLED)
