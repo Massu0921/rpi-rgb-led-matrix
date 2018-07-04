@@ -126,6 +126,13 @@ class GUI(TK.Frame,MetroDJ):
         bt_stop = TK.Button(text=u' Stop ',font=("",fontsize),bg='IndianRed1',command=self.stop)
         bt_stop.grid(row=2,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
+        bt_next.configure(state=TK.DISABLED)
+        bt_back.configure(state=TK.DISABLED)
+        bt_start.configure(state=TK.NORMAL)
+        bt_end.configure(state=TK.NORMAL)
+        #bt_pause.configure(state=TK.NORMAL)
+        bt_stop.configure(state=TK.DISABLED)
+
     # 曲番号加算・減算用メソッド
     def add(self):
         self.number += 1
