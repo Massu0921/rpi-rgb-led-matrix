@@ -32,6 +32,7 @@ class MetroDJ(object):
             self.setlist = sl.readlines()
         for i in range(len(self.setlist)):
             self.setlist[i] = self.setlist[i].replace('\n','')
+            self.setlist[i] = self.setlist[i].decode('utf-8')
 
         # リスト最後に空白を追加
         self.setlist.append('')
@@ -50,8 +51,8 @@ class MetroDJ(object):
         self.red = graphics.Color(255, 0, 0)
         self.green = graphics.Color(0,255,0)
 
-        #ループ制御用変数
-        self.stopper = False
+        #座標用変数
+        self.low_x = self._width
 
         # 曲番号用変数
         self.number = self.setlist_len
@@ -77,7 +78,6 @@ class MetroDJ(object):
 
     # 表示部
     def run(self):
-        low_x = self._width
         while True:
             self.canvas.Clear()
 
@@ -85,18 +85,18 @@ class MetroDJ(object):
             self.low_led()
 
             graphics.DrawText(self.canvas,self.clcfont,0,16,self.white,self.up_text)
-            len = graphics.DrawText(self.canvas,self.gothic,low_x,30,self.blue,self.low_text)
-            if (low_x + len < 0):
-                low_x = self._width
+            len = graphics.DrawText(self.canvas,self.gothic,self.low_x,30,self.blue,self.low_text)
+            if (self.low_x + len < 0):
+                self.low_x = self._width
 
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
-            low_x -= 1
+            self.low_x -= 1
             time.sleep(0.02)
 
 class GUI(TK.Frame,MetroDJ):
-    def __init__(self.master=None):
+    def __init__(self,master=None):
         # エラー回避のため先にGUIを作成
-        TK.Frame.__init__(self.master)
+        TK.Frame.__init__(self,master)
         MetroDJ.__init__(self)
 
         self.master.title('Metro-LEDJ')
@@ -115,10 +115,10 @@ class GUI(TK.Frame,MetroDJ):
         bt_back.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         bt_start = TK.Button(text=u' Start (Reset) ',font=("",fontsize),bg='green2',command=self.start)
-        bt_stop.grid(row=1,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        bt_start.grid(row=1,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        bt_stop = TK.Button(text=u' End Message ',font=("",fontsize),bg='yellow2',command=self.end)
-        bt_stop.grid(row=1,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        bt_end = TK.Button(text=u' End Message ',font=("",fontsize),bg='yellow2',command=self.end)
+        bt_end.grid(row=1,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         bt_stop = TK.Button(text=u' Stop ',font=("",fontsize),bg='IndianRed1',command=self.stop)
         bt_stop.grid(row=2,column=0,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
@@ -126,18 +126,23 @@ class GUI(TK.Frame,MetroDJ):
     # 曲番号加算・減算用メソッド
     def add(self):
         self.number += 1
+        self.low_x = self._width
 
     def sub(self):
         self.number -= 1
+        self.low_x = self._width
 
     def start(self):
         self.number = 0
+        self.low_x = self._width
 
     def end(self):
         self.number = self.setlist_len - 1
+        self.low_x = self._width
 
     def stop(self):
         self.number = self.setlist_len
+        self.low_x = self._width
 
 if __name__ == '__main__':
     gui = GUI()
