@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import sys,os,time
+import sys,os,time,threading
+import Tkinter as TK
 from datetime import datetime as dt
 
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '../'))
@@ -72,7 +73,6 @@ class MetroDJ(object):
         try:
             self.low_text = self.setlist[self.number]
         except:
-            print("正しい数値を入力して下さい")
             self.number = self.setlist_len
 
     # 表示部
@@ -83,18 +83,62 @@ class MetroDJ(object):
 
             self.up_led()
             self.low_led()
-            
+
             graphics.DrawText(self.canvas,self.clcfont,0,16,self.white,self.up_text)
             len = graphics.DrawText(self.canvas,self.gothic,low_x,30,self.blue,self.low_text)
             if (low_x + len < 0):
                 low_x = self._width
-                
-                self.number = input("number:") - 1
 
             self.canvas = self.matrix.SwapOnVSync(self.canvas)
             low_x -= 1
             time.sleep(0.02)
 
+class GUI(TK.Frame,MetroDJ):
+    def __init__(self.master=None):
+        # エラー回避のため先にGUIを作成
+        TK.Frame.__init__(self.master)
+        MetroDJ.__init__(self)
+
+        self.master.title('Metro-LEDJ')
+        fontsize = 25
+        dx = 20
+        dy = 20
+
+        th_led = threading.Thread(target = self.run)
+        th_led.setDaemon(True)
+        th_led.start()
+
+        bt_next = TK.Button(text=u' Next ▶ ',font=("",fontsize),bg='Khaki',command=self.add)
+        bt_next.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+
+        bt_back = TK.Button(text=u' Back ◀ ',font=("",fontsize),bg='cyan',command=self.sub)
+        bt_back.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+
+        bt_start = TK.Button(text=u' Start (Reset) ',font=("",fontsize),bg='green2',command=self.start)
+        bt_stop.grid(row=1,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        bt_stop = TK.Button(text=u' End Message ',font=("",fontsize),bg='yellow2',command=self.end)
+        bt_stop.grid(row=1,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        bt_stop = TK.Button(text=u' Stop ',font=("",fontsize),bg='IndianRed1',command=self.stop)
+        bt_stop.grid(row=2,column=0,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+    # 曲番号加算・減算用メソッド
+    def add(self):
+        self.number += 1
+
+    def sub(self):
+        self.number -= 1
+
+    def start(self):
+        self.number = 0
+
+    def end(self):
+        self.number = self.setlist_len - 1
+
+    def stop(self):
+        self.number = self.setlist_len
+
 if __name__ == '__main__':
-    metroclock = MetroDJ()
-    metroclock.run()
+    gui = GUI()
+    gui.mainloop()
