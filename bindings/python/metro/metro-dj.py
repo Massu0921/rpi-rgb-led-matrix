@@ -127,22 +127,22 @@ class GUI(TK.Frame,MetroDJ):
         self.message_label.grid(row=0,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         # ボタン定義・設置
-        self.bt_next = TK.Button(text=u' Next ▶❙ ',font=("",fontsize),bg='Khaki',command=self.add)
+        self.bt_next = TK.Button(text=u'　　Next ▶❙　　',font=("",fontsize),bg='Khaki',command=self.add)
         self.bt_next.grid(row=1,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_back = TK.Button(text=u' Back ❙◀ ',font=("",fontsize),bg='cyan',command=self.sub)
+        self.bt_back = TK.Button(text=u'　　Back ❙◀　　',font=("",fontsize),bg='cyan',command=self.sub)
         self.bt_back.grid(row=1,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_start = TK.Button(text=u' Start (Reset) ▶ ',font=("",fontsize),bg='green2',command=self.start)
+        self.bt_start = TK.Button(text=u'　Start (Reset) ▶　',font=("",fontsize),bg='green2',command=self.start)
         self.bt_start.grid(row=2,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        self.bt_end = TK.Button(text=u' End Message ▶▶❙ ',font=("",fontsize),bg='yellow2',command=self.end)
+        self.bt_end = TK.Button(text=u'　End Message ▶▶❙　',font=("",fontsize),bg='yellow2',command=self.end)
         self.bt_end.grid(row=2,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        self.bt_pause = TK.Button(text=u' Pause ❙❙ ',font=("",fontsize),bg='magenta2',command=self.pause)
+        self.bt_pause = TK.Button(text=u'　　Pause ❙❙　　',font=("",fontsize),bg='magenta2',command=self.pause)
         self.bt_pause.grid(row=3,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        self.bt_stop = TK.Button(text=u' Stop ■ ',font=("",fontsize),bg='IndianRed1',command=self.stop)
+        self.bt_stop = TK.Button(text=u'　　Stop ■　　',font=("",fontsize),bg='IndianRed1',command=self.stop)
         self.bt_stop.grid(row=3,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         self.bt_next.configure(state=TK.DISABLED)
