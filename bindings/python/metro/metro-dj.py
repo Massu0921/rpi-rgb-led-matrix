@@ -226,7 +226,7 @@ class GUI(TK.Frame,MetroDJ):
 
         else:
             self.number = self.save_num
-            self.bt_pause.configure(text=u' Pause || ')
+            self.bt_pause.configure(text=u' Pause ❙❙ ')
             # ボタンを有効にするかどうかの判定
             if self.number >= 0 and self.number < self.setlist_len - 2:
                 self.bt_next.configure(state=TK.NORMAL)
