@@ -7,6 +7,7 @@ from datetime import datetime as dt
 sys.path.append(os.path.abspath(os.path.dirname(__file__) + '../'))
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 
+# LED
 class MetroDJ(object):
     #インスタンス生成時に実行
     def __init__(self,chain=4,bright=50): #デフォルト設定（引数なしの場合）
@@ -30,6 +31,8 @@ class MetroDJ(object):
         # セットリストのテキストファイル読み込み
         with open("Resources/SetList.txt") as sl:
             self.setlist = sl.readlines()
+
+        # 改行除去, デコード
         for i in range(len(self.setlist)):
             self.setlist[i] = self.setlist[i].replace('\n','').replace('	','　')
             self.setlist[i] = self.setlist[i].decode('utf-8')
@@ -59,10 +62,12 @@ class MetroDJ(object):
 
     # 上段
     def up_led(self):
+        # 時刻取得
         hour = dt.now().strftime("%H")
         minute = dt.now().strftime("%M")
         sec = dt.now().strftime("%S")
 
+        # コロン表示判定
         if int(sec) % 2 == 0:
             self.up_text = hour + ':' + minute
         else:
@@ -79,13 +84,18 @@ class MetroDJ(object):
     # 表示部
     def run(self):
         while True:
+            # 表示初期化
             self.canvas.Clear()
 
             self.up_led()
             self.low_led()
 
+            # 上段表示
             graphics.DrawText(self.canvas,self.clcfont,0,16,self.white,self.up_text)
+            # 下段表示
             len = graphics.DrawText(self.canvas,self.gothic,self.low_x,30,self.blue,self.low_text)
+
+            # 端に到達した場合
             if (self.low_x + len < 0):
                 self.low_x = self._width
 
@@ -95,44 +105,48 @@ class MetroDJ(object):
             # スクロール速度
             time.sleep(0.02)
 
+# Tkinter
 class GUI(TK.Frame,MetroDJ):
     def __init__(self,master=None):
         # エラー回避のため先にGUIを作成
         TK.Frame.__init__(self,master)
         MetroDJ.__init__(self)
 
+        # Tkinterパラメータ
         self.master.title('Metro-LEDJ')
         fontsize = 25
         dx = 20
         dy = 20
 
+        # LEDの並列処理開始
         th_led = threading.Thread(target = self.run)
         th_led.setDaemon(True)
         th_led.start()
 
+        # ボタン定義・設置
         self.bt_next = TK.Button(text=u' Next ▶▶ ',font=("",fontsize),bg='Khaki',command=self.add)
         self.bt_next.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_back = TK.Button(text=u' Back ◀◀ ',font=("",fontsize),bg='cyan',command=self.sub)
         self.bt_back.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_start = TK.Button(text=u' Start (Reset) ',font=("",fontsize),bg='green2',command=self.start)
+        self.bt_start = TK.Button(text=u' Start (Reset) ▶ ',font=("",fontsize),bg='green2',command=self.start)
         self.bt_start.grid(row=1,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        self.bt_end = TK.Button(text=u' End Message ',font=("",fontsize),bg='yellow2',command=self.end)
+        self.bt_end = TK.Button(text=u' End Message ▶▶| ',font=("",fontsize),bg='yellow2',command=self.end)
         self.bt_end.grid(row=1,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        #self.bt_pause = TK.Button(text=u' Pause ',font=("",fontsize),bg='magenta2',command=self.pause)
-        #self.bt_pause.grid(row=2,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_pause = TK.Button(text=u' Pause || ',font=("",fontsize),bg='magenta2',command=self.pause)
+        self.bt_pause.grid(row=2,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
-        self.bt_stop = TK.Button(text=u' Stop ',font=("",fontsize),bg='IndianRed1',command=self.stop)
+        self.bt_stop = TK.Button(text=u' Stop ■ ',font=("",fontsize),bg='IndianRed1',command=self.stop)
         self.bt_stop.grid(row=2,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         self.bt_next.configure(state=TK.DISABLED)
         self.bt_back.configure(state=TK.DISABLED)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.NORMAL)
-        #self.bt_pause.configure(state=TK.NORMAL)
+        self.bt_pause.configure(state=TK.NORMAL)
         self.bt_stop.configure(state=TK.DISABLED)
 
     # 曲番号加算・減算用メソッド
@@ -140,12 +154,12 @@ class GUI(TK.Frame,MetroDJ):
         self.number += 1
         self.low_x = self._width
 
-        if self.number > self.setlist_len - 1:
+        if self.number > self.setlist_len - 2:
             self.bt_next.configure(state=TK.DISABLED)
         self.bt_back.configure(state=TK.NORMAL)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.NORMAL)
-        #self.bt_pause.configure(state=TK.DISABLED)
+        self.bt_pause.configure(state=TK.NORMAL)
         self.bt_stop.configure(state=TK.NORMAL)
 
     def sub(self):
@@ -157,9 +171,10 @@ class GUI(TK.Frame,MetroDJ):
             self.bt_back.configure(state=TK.DISABLED)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.NORMAL)
-        #self.bt_pause.configure(state=TK.DISABLED)
+        self.bt_pause.configure(state=TK.NORMAL)
         self.bt_stop.configure(state=TK.NORMAL)
 
+    # 初期メッセージ表示用
     def start(self):
         self.number = 0
         self.low_x = self._width
@@ -168,20 +183,42 @@ class GUI(TK.Frame,MetroDJ):
         self.bt_back.configure(state=TK.DISABLED)
         self.bt_start.configure(state=TK.DISABLED)
         self.bt_end.configure(state=TK.NORMAL)
-        #self.bt_pause.configure(state=TK.DISABLED)
+        self.bt_pause.configure(state=TK.NORMAL)
         self.bt_stop.configure(state=TK.NORMAL)
 
+    # 終了メッセージ表示用
     def end(self):
-        self.number = self.setlist_len - 1
+        self.number = self.setlist_len - 2
         self.low_x = self._width
 
         self.bt_next.configure(state=TK.DISABLED)
         self.bt_back.configure(state=TK.NORMAL)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.DISABLED)
-        #self.bt_pause.configure(state=TK.DISABLED)
+        self.bt_pause.configure(state=TK.NORMAL)
         self.bt_stop.configure(state=TK.NORMAL)
 
+    # 表示一時停止用
+    def pause(self):
+        # 状態判定
+        if self.number != self.setlist_len - 1:
+            self.save_num = self.number
+            self.number = self.setlist_len - 1
+            self.bt_pause.configure(text=u' Restart ▶ ')
+        else:
+            self.number = self.save_num
+            self.bt_pause.configure(text=u' Pause || ')
+
+        self.low_x = self._width
+
+        self.bt_next.configure(state=TK.DISABLED)
+        self.bt_back.configure(state=TK.DISABLED)
+        self.bt_start.configure(state=TK.DISABLED)
+        self.bt_end.configure(state=TK.DISABLED)
+        self.bt_pause.configure(state=TK.DISABLED)
+        self.bt_stop.configure(state=TK.NORMAL)
+
+    # 表示停止用
     def stop(self):
         self.number = self.setlist_len
         self.low_x = self._width
@@ -190,7 +227,7 @@ class GUI(TK.Frame,MetroDJ):
         self.bt_back.configure(state=TK.DISABLED)
         self.bt_start.configure(state=TK.NORMAL)
         self.bt_end.configure(state=TK.NORMAL)
-        #self.bt_pause.configure(state=TK.NORMAL)
+        self.bt_pause.configure(state=TK.DISABLED,text=u' Pause || ')
         self.bt_stop.configure(state=TK.DISABLED)
 
 if __name__ == '__main__':
