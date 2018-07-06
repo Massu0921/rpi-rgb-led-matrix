@@ -205,18 +205,24 @@ class GUI(TK.Frame,MetroDJ):
             self.save_num = self.number
             self.number = self.setlist_len - 1
             self.bt_pause.configure(text=u' Restart ▶ ')
+            self.bt_next.configure(state=TK.DISABLED)
+            self.bt_back.configure(state=TK.DISABLED)
+            self.bt_start.configure(state=TK.DISABLED)
+            self.bt_end.configure(state=TK.DISABLED)
+            self.bt_stop.configure(state=TK.NORMAL)
         else:
             self.number = self.save_num
             self.bt_pause.configure(text=u' Pause || ')
+            # ボタンを有効にするかどうかの判定
+            if self.number >= 0 and self.number < self.setlist_len - 2:
+                self.bt_next.configure(state=TK.NORMAL)
+            if self.number > 0 and self.number <= self.setlist_len - 2:
+                self.bt_back.configure(state=TK.NORMAL)
+            self.bt_start.configure(state=TK.NORMAL)
+            self.bt_end.configure(state=TK.NORMAL)
+            self.bt_stop.configure(state=TK.NORMAL)
 
         self.low_x = self._width
-
-        self.bt_next.configure(state=TK.DISABLED)
-        self.bt_back.configure(state=TK.DISABLED)
-        self.bt_start.configure(state=TK.DISABLED)
-        self.bt_end.configure(state=TK.DISABLED)
-        self.bt_pause.configure(state=TK.DISABLED)
-        self.bt_stop.configure(state=TK.NORMAL)
 
     # 表示停止用
     def stop(self):
