@@ -12,10 +12,10 @@ import modules
 
 # 各モード起動用
 class LED(object):
-    def __init__(self,chain=4,bright=50):
+    def __init__(self,chain=4,bright=40):
         self.led = modules.Led_Setup(chain,bright)
         print(u'32x32 {0} 枚、明るさ {1} で動作します'.format(chain,bright))
-        self.streaming = modules.Streaming(u'RTR_Party')
+        self.streaming = modules.Streaming(u'文発')
         print(u'ハッシュタグ：#' + self.streaming.hashtag)
 
         stream_th = threading.Thread(target = self.streaming.start_streaming,args=(self.streaming,))
