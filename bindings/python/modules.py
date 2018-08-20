@@ -633,13 +633,14 @@ class VolumeBars(object):
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
-"""
 # DJ名・セトリ・時計表示
 class MetroDJ(object):
 
     @staticmethod
     def run(led):
 
+        # 位置比較・座標リセット用
+        compnum = led.number
 
         # 上段
         def up_led():
@@ -674,13 +675,14 @@ class MetroDJ(object):
             # 下段表示
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.blue,low_text)
 
-            # 端に到達した場合
-            if (low_x + len < 0):
+            # 端に到達した場合・
+            if (low_x + len < 0) or not compnum == led.number:
                 low_x = led._width
+
+            compnum = led.number
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             low_x -= 1
 
             # スクロール速度
             time.sleep(0.02)
-"""
