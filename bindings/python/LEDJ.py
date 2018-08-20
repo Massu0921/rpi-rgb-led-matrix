@@ -91,42 +91,42 @@ class LED(object):
 
 
 # GUI用
-class Gui(TK.Frame,LED):
+class GUI(TK.Frame,LED):
     def __init__(self,master=None):
         #エラー回避のため、先にGUIフレーム作成
         TK.Frame.__init__(self,master)
         LED.__init__(self)
 
-        self.master.title('LEDJ_Controller_RTR')
+        self.master.title('LEDJ_Controller')
         fontsize = 25
         dx = 20
         dy = 20
 
-        bt_intro = TK.Button(text=u'　同好会紹介　',font=("",fontsize),bg='Khaki',command=self.introduction)
-        bt_intro.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_intro = TK.Button(text=u'　同好会紹介　',font=("",fontsize),bg='Khaki',command=self.introduction)
+        self.bt_intro.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_tweet = TK.Button(text=u'ツイート晒し',font=("",fontsize),bg='cyan',command=self.display_tweet)
-        bt_tweet.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_tweet = TK.Button(text=u'ツイート晒し',font=("",fontsize),bg='cyan',command=self.display_tweet)
+        self.bt_tweet.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='purple1',command=self.circleanime)
-        bt_circle.grid(row=1,column=0,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='purple1',command=self.circleanime)
+        self.bt_circle.grid(row=1,column=0,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='magenta2',command=self.pulsingbrightness)
-        bt_pulb.grid(row=1,column=1,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='magenta2',command=self.pulsingbrightness)
+        self.bt_pulb.grid(row=1,column=1,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_pulc = TK.Button(text=u'PulsingColors',font=("",fontsize),bg='OrangeRed2',command=self.pulsingcolors)
-        bt_pulc.grid(row=1,column=2,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_pulc = TK.Button(text=u'PulsingColors',font=("",fontsize),bg='OrangeRed2',command=self.pulsingcolors)
+        self.bt_pulc.grid(row=1,column=2,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='yellow2',command=self.volumebars)
-        bt_volume.grid(row=1,column=3,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='yellow2',command=self.volumebars)
+        self.bt_volume.grid(row=1,column=3,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_dep = TK.Button(text=u'Departure',font=("",fontsize),bg='green2',command=self.departure)
-        bt_dep.grid(row=2,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_dep = TK.Button(text=u'Departure',font=("",fontsize),bg='green2',command=self.departure)
+        self.bt_dep.grid(row=2,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        bt_stop = TK.Button(text=u'停　止',font=("",fontsize),bg='IndianRed1',command=self.stop_led)
-        bt_stop.grid(row=3,column=0,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_stop = TK.Button(text=u'停　止',font=("",fontsize),bg='IndianRed1',command=self.stop_led)
+        self.bt_stop.grid(row=3,column=0,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
 
 
 if __name__ == '__main__':
-    gui = Gui()
+    gui = GUI()
     gui.mainloop()
