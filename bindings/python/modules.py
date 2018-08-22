@@ -703,10 +703,6 @@ class DJList(object):
         while led.stopper:
             led.canvas.Clear()
 
-            if not save_num == led.djlist_num:
-                low_x = led._width
-            save_num = led.djlist_num
-
             red,green,blue = rainbow(continuum)
             len = graphics.DrawText(led.canvas,led.gothic,0,14,led.green,text_up1)
             save_x = len
@@ -714,7 +710,7 @@ class DJList(object):
             len = graphics.DrawText(led.canvas,led.gothic,save_x+len,14,led.blue,text_up3)
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,text_low)
 
-            low_x -= 0.9
+            low_x -= 1
             count += 0.5
             continuum += 1
 
@@ -728,9 +724,11 @@ class DJList(object):
                 text_up1 = u'  Next  '
                 text_up2 = led.dj_name[led.djlist_num] + '  '
                 text_up3 = led.dj_genre[led.djlist_num]
-            if len + low_x < 0:
+            if len + low_x < 0 or not save_num == led.djlist_num:
                 low_x = led._width
                 text_low = led.dj_comment[led.djlist_num]
+
+            save_num = led.djlist_num
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(0.01)
