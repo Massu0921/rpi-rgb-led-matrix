@@ -78,12 +78,12 @@ class GUI(TK.Frame,LED):
         # LEDJ x VJ
         self.fr_gif = TK.LabelFrame(text='GifPlayer',font=("",16))
         self.fr_gif.grid(sticky=TK.W+TK.E, padx=dx, pady=4)
-        self.ent_gif = TK.Entry(font=("",16))
-        self.ent_gif.grid(self.fr_gif,row=5,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W + TK.E)
-        self.bt_gif = TK.Button(text=u'Browse',font=("",16),command=self.browse)
-        self.bt_gif.grid(self.fr_gif,row=5,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
-        self.bt_gifplay = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer)
-        self.bt_gifplay.grid(self.fr_gif,row=5,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.ent_gif = TK.Entry(self.fr_gif,font=("",16))
+        self.ent_gif.grid(row=5,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_gif = TK.Button(self.fr_gif,text=u'Browse',font=("",16),command=self.browse)
+        self.bt_gif.grid(row=5,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_gifplay = TK.Button(self.fr_gif,text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer)
+        self.bt_gifplay.grid(row=5,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
     # LED停止用
     def stop_led(self):
