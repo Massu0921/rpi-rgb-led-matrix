@@ -61,6 +61,7 @@ class GUI(TK.Frame,LED):
 
         self.bt_back = TK.Button(text=u'　　Back ❙◀　　',font=("",fontsize),bg='cyan',command=self.sub)
         self.bt_back.grid(row=3,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_back.configure(state=TK.DISABLED)
 
         self.bt_start = TK.Button(text=u'　Start (Reset) ▶　',font=("",fontsize),bg='green2',command=self.djlist)
         self.bt_start.grid(row=3,column=4,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
@@ -154,7 +155,7 @@ class GUI(TK.Frame,LED):
     def add(self):
         self.led.djlist_num += 1
 
-        if  self.led.djlist_num <= self.led.djlist_len:
+        if  self.led.djlist_num >= self.led.djlist_len:
             self.bt_next.configure(state=TK.DISABLED)
         else:
             self.bt_next.configure(state=TK.NORMAL)
