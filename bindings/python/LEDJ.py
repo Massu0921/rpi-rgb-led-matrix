@@ -90,6 +90,15 @@ class LED(object):
         th_led.start()
 
 
+    def djlist(self):
+        self.led.stopper = False
+        time.sleep(0.5)
+        th_led = threading.Thread(target = modules.DJList.run,args=(self.led,))
+        th_led.setDaemon(True)
+        self.led.stopper = True
+        th_led.start()
+
+
 # GUI用
 class GUI(TK.Frame,LED):
     def __init__(self,master=None):
@@ -102,7 +111,7 @@ class GUI(TK.Frame,LED):
         dx = 20
         dy = 20
 
-        self.bt_intro = TK.Button(text=u'　同好会紹介　',font=("",fontsize),bg='Khaki',command=self.introduction)
+        self.bt_intro = TK.Button(text=u'　紹　介　',font=("",fontsize),bg='Khaki',command=self.introduction)
         self.bt_intro.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_tweet = TK.Button(text=u'ツイート晒し',font=("",fontsize),bg='cyan',command=self.display_tweet)
@@ -125,6 +134,29 @@ class GUI(TK.Frame,LED):
 
         self.bt_stop = TK.Button(text=u'停　止',font=("",fontsize),bg='IndianRed1',command=self.stop_led)
         self.bt_stop.grid(row=3,column=0,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        # DJリスト表示用
+        self.message_label = TK.Label(text=u' --- ',font=("",16))
+        self.message_label.grid(row=4,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
+
+        self.bt_back = TK.Button(text=u'　　Back ❙◀　　',font=("",fontsize),bg='cyan',command=self.sub)
+        self.bt_back.grid(row=5,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
+
+        self.bt_start = TK.Button(text=u'　Start (Reset) ▶　',font=("",fontsize),bg='green2',command=self.start)
+        self.bt_start.grid(row=5,column=1,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        self.bt_next = TK.Button(text=u'　　Next ▶❙　　',font=("",fontsize),bg='Khaki',command=self.add)
+        self.bt_next.grid(row=5,column=2,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
+
+        self.bt_end = TK.Button(text=u'　End Message ▶▶❙　',font=("",fontsize),bg='yellow2',command=self.end)
+        self.bt_end.grid(row=5,column=3,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        self.bt_pause = TK.Button(text=u'　　Pause ❙❙　　',font=("",fontsize),bg='magenta2',command=self.pause)
+        self.bt_pause.grid(row=6,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        self.bt_stop = TK.Button(text=u'　　Stop ■　　',font=("",fontsize),bg='IndianRed1',command=self.stop)
+        self.bt_stop.grid(row=6,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+
 
 
 if __name__ == '__main__':
