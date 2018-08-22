@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import Tkinter as TK
+import tkFileDialog as FD
 import threading,time
 import modules
 
@@ -31,8 +32,9 @@ class GUI(TK.Frame,LED):
 
         self.master.title('LEDJ_Controller')
         fontsize = 25
+        # 外側隙間
         dx = 20
-        dy = 20
+        dy = 10
 
         self.bt_intro = TK.Button(text=u'Introduction',font=("",fontsize),bg='Khaki',command=self.introduction)
         self.bt_intro.grid(row=0,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
@@ -63,7 +65,7 @@ class GUI(TK.Frame,LED):
         self.bt_back.grid(row=3,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
         self.bt_back.configure(state=TK.DISABLED)
 
-        self.bt_start = TK.Button(text=u'　Start (Reset) ▶　',font=("",fontsize),bg='green2',command=self.djlist)
+        self.bt_start = TK.Button(text=u'　Start ▶　',font=("",fontsize),bg='green2',command=self.djlist)
         self.bt_start.grid(row=3,column=4,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         self.bt_next = TK.Button(text=u'　　Next ▶❙　　',font=("",fontsize),bg='Khaki',command=self.add)
@@ -72,6 +74,16 @@ class GUI(TK.Frame,LED):
         # 停止ボタン
         self.bt_stop = TK.Button(text=u'　停　止　Stop ■　',font=("",fontsize),bg='IndianRed1',command=self.stop_led)
         self.bt_stop.grid(row=4,column=0,columnspan=12,padx=dx,pady=20,sticky=TK.W + TK.E)
+
+        # LEDJ x VJ
+        self.fr_gif = TK.LabelFrame(text='GifPlayer',font=("",16))
+        self.fr_gif.grid(sticky=TK.W+TK.E, padx=dx, pady=4)
+        self.ent_gif = TK.Entry(font=("",16))
+        self.ent_gif.grid(self.fr_gif,row=5,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_gif = TK.Button(text=u'Browse',font=("",16),command=self.browse)
+        self.bt_gif.grid(self.fr_gif,row=5,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_gifplay = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer)
+        self.bt_gifplay.grid(self.fr_gif,row=5,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
 
     # LED停止用
     def stop_led(self):
@@ -140,7 +152,7 @@ class GUI(TK.Frame,LED):
         self.led.stopper = True
         th_led.start()
 
-    # メッセージ表示用
+    # DJ名・コメント表示用
     def djlist(self):
         self.led.stopper = False
         time.sleep(0.5)
@@ -150,6 +162,15 @@ class GUI(TK.Frame,LED):
         th_led.start()
 
         self.message_label.configure(text = self.led.dj_name[self.led.djlist_num])
+
+    # GifPlayer
+    def gifplayer(self):
+        self.led.stopper = False
+        time.sleep(0.5)
+        th_led = threading.Thread(target = modules.GifPlayer.run,args=(self.led,))
+        th_led.setDaemon(True)
+        self.led.stopper = True
+        th_led.start()
 
     # 曲番号加算・減算用メソッド
     def add(self):
@@ -173,6 +194,18 @@ class GUI(TK.Frame,LED):
             self.bt_back.configure(state=TK.NORMAL)
 
         self.message_label.configure(text = self.led.dj_name[self.led.djlist_num])
+
+    # Brouse Window
+    def browse(self):
+        # ファイル名取得
+        dir = FD.askopenfilename()
+        # dirが存在
+        if dir:
+            # Entryにdirを表示
+            self.ent_dr.delete(0,TK.END)
+            self.ent_dr.insert(0,dir)
+            # gifへのpathの受け渡し
+            self.led.gif_path = dir
 
 if __name__ == '__main__':
     gui = GUI()
