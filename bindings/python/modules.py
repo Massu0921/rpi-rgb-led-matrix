@@ -67,7 +67,7 @@ class Led_Setup(object):
             self.dj_comment.append(dj_sp[2])
 
         # リスト長を取得 (-1)
-        self.djlist_len = len(self.setlist) - 1
+        self.djlist_len = len(self.dj_name) - 1
 
         ####################
 
@@ -107,7 +107,7 @@ class Streaming(tweepy.StreamListener):
         with open(keytxt_path,'r') as keytxt:
             keylist = keytxt.readlines()
 
-        for i in range(0,len(djlist)):
+        for i in range(0,len(keylist)):
             keylist[i] = keylist[i].decode('utf-8')
             keylist[i] = keylist[i].replace('\n','')
 
