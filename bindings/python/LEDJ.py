@@ -41,7 +41,7 @@ class GUI(TK.Frame,LED):
         self.bt_tweet.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_dep = TK.Button(text=u'Departure',font=("",fontsize),bg='green2',command=self.departure)
-        self.bt_dep.grid(row=0,column=4,columnspan=2padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_dep.grid(row=0,column=4,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='purple1',command=self.circleanime)
         self.bt_circle.grid(row=1,column=0,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
