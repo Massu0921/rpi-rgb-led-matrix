@@ -77,7 +77,7 @@ class GUI(TK.Frame,LED):
 
         # LEDJ x VJ
         self.fr_gif = TK.LabelFrame(text='GifPlayer',font=("",16))
-        self.fr_gif.grid(row=5,colmn=0,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.fr_gif.grid(row=5,column=0,padx=dx,pady=20,sticky=TK.W+TK.E)
         self.ent_gif = TK.Entry(self.fr_gif,font=("",16))
         self.ent_gif.grid(row=5,column=1,columnspan=8,padx=dx,pady=20,sticky=TK.W + TK.E)
         self.bt_gif = TK.Button(self.fr_gif,text=u'Browse',font=("",16),command=self.browse)
