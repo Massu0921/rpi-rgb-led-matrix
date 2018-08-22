@@ -65,6 +65,7 @@ class Led_Setup(object):
             self.dj_name.append(dj_sp[0])
             self.dj_genre.append(dj_sp[1].replace('#',','))
             self.dj_comment.append(dj_sp[2])
+            print(dj_name)
 
         # リスト長を取得 (-1)
         self.djlist_len = len(self.dj_name) - 1
@@ -693,7 +694,7 @@ class DJList(object):
 
         while led.stopper:
             led.canvas.Clear()
-            
+
             red,green,blue = rainbow(continuum)
             len = graphics.DrawText(led.canvas,led.gothic,0,14,led.green,text_up1)
             save_x = len
