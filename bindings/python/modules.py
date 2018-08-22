@@ -651,7 +651,7 @@ class VolumeBars(object):
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
 # 次DJ名・ジャンル表示
-class DJlist(object):
+class DJList(object):
 
     @staticmethod
     def run(led):
