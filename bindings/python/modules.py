@@ -68,7 +68,6 @@ class Led_Setup(object):
 
         # リスト長を取得 (-1)
         self.djlist_len = len(self.dj_name) - 1
-        print(self.djlist_len)
 
         ####################
 
@@ -656,8 +655,26 @@ class DJList(object):
 
     @staticmethod
     def run(led):
-        #レインボー用カウント
+        # レインボー用カウント
         continuum = 0
+
+        # 初期設定
+        text_up1 = ''
+        text_up2 = led.dj_name[led.djlist_num] + '  '
+        text_up3 = led.dj_genre[led.djlist_num]
+        text_low = led.dj_comment[led.djlist_num]
+
+        # 座標保持
+        save_x = 0
+
+        # リスト確認・座標リセット用
+        save_num = led.djlist_num
+
+        # 初期座標
+        low_x = led._width
+
+        # 表示切り替え用
+        count = 0
 
         # レインボー表示
         def rainbow(continuum):
@@ -682,18 +699,13 @@ class DJList(object):
 
             return red,green,blue
 
-        text_up1 = ''
-        text_up2 = led.dj_name[led.djlist_num] + '  '
-        text_up3 = led.dj_genre[led.djlist_num]
-        text_low = led.dj_comment[led.djlist_num]
-        save_x = 0
-
-        low_x = led._width
-
-        count = 0
-
+        # メインループ
         while led.stopper:
             led.canvas.Clear()
+
+            if not save_num == led.djlist_num:
+                low_x = led._width
+            save_num = led.djlist_num
 
             red,green,blue = rainbow(continuum)
             len = graphics.DrawText(led.canvas,led.gothic,0,14,led.green,text_up1)
@@ -702,7 +714,7 @@ class DJList(object):
             len = graphics.DrawText(led.canvas,led.gothic,save_x+len,14,led.blue,text_up3)
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,text_low)
 
-            low_x -= 1
+            low_x -= 0.9
             count += 0.5
             continuum += 1
 
