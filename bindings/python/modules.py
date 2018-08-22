@@ -22,7 +22,7 @@ class Led_Setup(object):
         self.matrix = RGBMatrix(options=self.options)
         self.canvas = self.matrix.CreateFrameCanvas()
 
-        ### Load Font
+        ### Load Font ###
         # 時計用フォント
         self.clcfont = graphics.Font()
         self.clcfont.LoadFont("Resources/Metroclock.bdf")
@@ -31,9 +31,9 @@ class Led_Setup(object):
         self.gothic = graphics.Font()
         self.gothic.LoadFont("Resources/Gothic-16.bdf")
 
-        ###///////////////
+        ###################
 
-        ### Load images
+        ### Load images ###
         # twitterロゴ読み込み
         self.icon_twitter = Image.open("Resources/icon_twitter.png").convert('RGB')
         self.icon_twitter_width,self.icon_twitter_height = self.icon_twitter.size
@@ -41,9 +41,35 @@ class Led_Setup(object):
         # TT用画像
         self.atos = Image.open("Resources/bunpatsu_atos.ppm").convert('RGB')
 
-        ###///////////////
+        ###################
 
-        ### セットリストのテキストファイル読み込み
+
+        ### DJ名・コメント読み込み
+        # DJ名・ジャンル・コメント用変数
+        self.dj_name    = []
+        self.dj_genre   = []
+        self.dj_comment = []
+
+        # リスト用変数
+        self.listnum = 0
+
+        # テキストファイル読み込み
+        with open("onken/DJList.txt",'r') as djtext:
+            djlist = djtext.readlines()
+
+        #各リストに格納
+        for i in range(0,len(djlist)):
+            djlist[i] = djlist[i].decode('utf-8')
+            djlist[i] = djlist[i].replace('\n','')
+            dj_sp = djlist[i].split(',')
+            self.dj_name.append(dj_sp[0])
+            self.dj_genre.append(dj_sp[1].replace('#',','))
+            self.dj_comment.append(dj_sp[2])
+
+        ####################
+
+        """
+        ### セットリストのテキストファイル読み込み ###
         with open("Resources/SetList.txt") as sl:
             self.setlist = sl.readlines()
 
@@ -57,11 +83,11 @@ class Led_Setup(object):
         # リスト長を取得 (-1)
         self.setlist_len = len(self.setlist) - 1
 
-        # 曲番号用変数
-        self.number = self.setlist_len
+        # リスト用変数
+        self.listnum = self.setlist_len
 
-        ###////////////////
-
+        ###################
+        """
         # LED長さ
         self._width  = self.canvas.width
         self._height = self.canvas.height
@@ -633,6 +659,82 @@ class VolumeBars(object):
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
+# 次DJ名・ジャンル表示
+class DJList(object):
+
+    @staticmethod
+    def run(led):
+        #レインボー用カウント
+        continuum = 0
+
+        # レインボー表示
+        def rainbow(continuum):
+            continuum %= 3 * 255
+
+            red = 0
+            green = 0
+            blue = 0
+
+            if continuum <= 255:
+                c = continuum
+                blue = 255 - c
+                red = c
+            elif continuum > 255 and continuum <= 511:
+                c = continuum - 256
+                red = 255 - c
+                green = c
+            else:
+                c = continuum - 512
+                green = 255 - c
+                blue = c
+
+            return red,green,blue
+
+        text_up1 = ''
+        text_up2 = led.dj_name[led.listnum] + '  '
+        text_up3 = led.dj_genre[led.listnum]
+        text_low = led.dj_comment[led.listnum]
+        save_x = 0
+
+        low_x = led._width
+
+        count = 0
+
+        while led.stopper:
+            led.canvas.Clear()
+
+            len = graphics.DrawText(led.canvas,led.gothic,0,14,led.green,text_up1)
+            save_x = len
+            len = graphics.DrawText(led.canvas,led.gothic,save_x,14,graphics.Color(red,green,blue),text_up2)
+            len = graphics.DrawText(led.canvas,led.gothic,save_x+len,14,led.blue,text_up3)
+            len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,text_low)
+
+            low_x -= 1
+            count += 1
+            continuum = 0
+            
+            if count > 200:
+                count = 0
+            if count <= 100:
+                text_up1 = u'  次は  '
+                text_up2 = led.dj_name[led.listnum] + '  '
+                text_up3 = led.dj_genre[led.listnum]
+            elif count > 100 and count <= 200:
+                text_up1 = u'  Next  '
+                text_up2 = led.dj_name[led.listnum] + '  '
+                text_up3 = led.dj_genre[led.listnum]
+            if len + low_x < 0:
+                low_x = led._width
+                text_low = led.dj_comment[led.listnum]
+
+            led.canvas = led.matrix.SwapOnVSync(led.canvas)
+            time.sleep(0.02)
+
+        led.canvas.Clear()
+        led.canvas = led.matrix.SwapOnVSync(led.canvas)
+
+
+"""
 # DJ名・セトリ・時計表示
 class MetroDJ(object):
 
@@ -686,3 +788,4 @@ class MetroDJ(object):
 
             # スクロール速度
             time.sleep(0.02)
+"""
