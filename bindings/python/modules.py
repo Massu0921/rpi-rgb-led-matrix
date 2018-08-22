@@ -71,6 +71,9 @@ class Led_Setup(object):
 
         ####################
 
+        # Gifファイルパス用
+        self.gif_path = ''
+
         # LED長さ
         self._width  = self.canvas.width
         self._height = self.canvas.height
@@ -735,6 +738,13 @@ class DJList(object):
 
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
+
+# LEDJ x VJ
+class GifPlayer(object):
+
+    @staticmethod
+    def run(led):
+        pass
 
 
 """
