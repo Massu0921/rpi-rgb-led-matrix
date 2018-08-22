@@ -196,14 +196,14 @@ class GUI(TK.Frame,LED):
     # Brouse Window
     def browse(self):
         # ファイル名取得
-        dir = FD.askopenfilename()
+        gif_path = FD.askopenfilename()
         # dirが存在
-        if dir:
+        if gif_path:
             # Entryにdirを表示
             self.ent_gif.delete(0,TK.END)
-            self.ent_gif.insert(0,dir)
+            self.ent_gif.insert(0,gif_path)
             # gifへのpathの受け渡し
-            self.led.gif_path = dir
+            self.led.gif_path = gif_path
 
 if __name__ == '__main__':
     gui = GUI()
