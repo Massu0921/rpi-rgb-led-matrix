@@ -51,10 +51,10 @@ class Led_Setup(object):
         self.dj_comment = []
 
         # リスト用変数
-        self.listnum = 0
+        self.djlist_num = 0
 
         # テキストファイル読み込み
-        with open("onken/DJList.txt",'r') as djtext:
+        with open("Resources/DJList.txt",'r') as djtext:
             djlist = djtext.readlines()
 
         #各リストに格納
@@ -66,28 +66,11 @@ class Led_Setup(object):
             self.dj_genre.append(dj_sp[1].replace('#',','))
             self.dj_comment.append(dj_sp[2])
 
+        # リスト長を取得 (-1)
+        self.djlist_len = len(self.setlist) - 1
+
         ####################
 
-        """
-        ### セットリストのテキストファイル読み込み ###
-        with open("Resources/SetList.txt") as sl:
-            self.setlist = sl.readlines()
-
-        # 改行除去, デコード
-        for i in range(len(self.setlist)):
-            self.setlist[i] = self.setlist[i].replace('\n','').replace('	','　')
-            self.setlist[i] = self.setlist[i].decode('utf-8')
-
-        # リスト最後に空白を追加
-        self.setlist.append('')
-        # リスト長を取得 (-1)
-        self.setlist_len = len(self.setlist) - 1
-
-        # リスト用変数
-        self.listnum = self.setlist_len
-
-        ###################
-        """
         # LED長さ
         self._width  = self.canvas.width
         self._height = self.canvas.height
@@ -119,11 +102,19 @@ class Streaming(tweepy.StreamListener):
         #タグ
         self.hashtag = hashtag
 
-        #Twitter アクセスキー
-        CK = ""
-        CS = ""
-        AT = ""
-        AS = ""
+        #Twitter アクセスキー 読み込み
+        keytxt_path = '/home/pi/twitter/key.txt'
+        with open(keytxt_path,'r') as keytxt:
+            keylist = keytxt.readlines()
+
+        for i in range(0,len(djlist)):
+            keylist[i] = keylist[i].decode('utf-8')
+            keylist[i] = keylist[i].replace('\n','')
+
+        CK = keylist[0]
+        CS = keylist[1]
+        AT = keylist[2]
+        AS = keylist[3]
 
         self.auth = tweepy.OAuthHandler(CK,CS)
         self.auth.set_access_token(AT,AS)
@@ -660,7 +651,7 @@ class VolumeBars(object):
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
 # 次DJ名・ジャンル表示
-class DJList(object):
+class DJlist(object):
 
     @staticmethod
     def run(led):
@@ -691,9 +682,9 @@ class DJList(object):
             return red,green,blue
 
         text_up1 = ''
-        text_up2 = led.dj_name[led.listnum] + '  '
-        text_up3 = led.dj_genre[led.listnum]
-        text_low = led.dj_comment[led.listnum]
+        text_up2 = led.dj_name[led.djlist_num] + '  '
+        text_up3 = led.dj_genre[led.djlist_num]
+        text_low = led.dj_comment[led.djlist_num]
         save_x = 0
 
         low_x = led._width
@@ -712,20 +703,20 @@ class DJList(object):
             low_x -= 1
             count += 1
             continuum = 0
-            
+
             if count > 200:
                 count = 0
             if count <= 100:
                 text_up1 = u'  次は  '
-                text_up2 = led.dj_name[led.listnum] + '  '
-                text_up3 = led.dj_genre[led.listnum]
+                text_up2 = led.dj_name[led.djlist_num] + '  '
+                text_up3 = led.dj_genre[led.djlist_num]
             elif count > 100 and count <= 200:
                 text_up1 = u'  Next  '
-                text_up2 = led.dj_name[led.listnum] + '  '
-                text_up3 = led.dj_genre[led.listnum]
+                text_up2 = led.dj_name[led.djlist_num] + '  '
+                text_up3 = led.dj_genre[led.djlist_num]
             if len + low_x < 0:
                 low_x = led._width
-                text_low = led.dj_comment[led.listnum]
+                text_low = led.dj_comment[led.djlist_num]
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(0.02)
