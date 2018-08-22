@@ -659,7 +659,7 @@ class DJList(object):
         continuum = 0
 
         # 初期設定
-        text_up1 = ''
+        text_up1 = u'  次は  '
         text_up2 = led.dj_name[led.djlist_num] + '  '
         text_up3 = led.dj_genre[led.djlist_num]
         text_low = led.dj_comment[led.djlist_num]
