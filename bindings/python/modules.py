@@ -693,7 +693,8 @@ class DJList(object):
 
         while led.stopper:
             led.canvas.Clear()
-
+            
+            red,green,blue = rainbow(continuum)
             len = graphics.DrawText(led.canvas,led.gothic,0,14,led.green,text_up1)
             save_x = len
             len = graphics.DrawText(led.canvas,led.gothic,save_x,14,graphics.Color(red,green,blue),text_up2)
@@ -702,7 +703,7 @@ class DJList(object):
 
             low_x -= 1
             count += 1
-            continuum = 0
+            continuum += 1
 
             if count > 200:
                 count = 0
