@@ -34,43 +34,43 @@ class GUI(TK.Frame,LED):
         dx = 20
         dy = 20
 
-        self.bt_intro = TK.Button(text=u'　紹　介　',font=("",fontsize),bg='Khaki',command=self.introduction)
-        self.bt_intro.grid(row=0,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_intro = TK.Button(text=u'Introduction',font=("",fontsize),bg='Khaki',command=self.introduction)
+        self.bt_intro.grid(row=0,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_tweet = TK.Button(text=u'ツイート晒し',font=("",fontsize),bg='cyan',command=self.display_tweet)
-        self.bt_tweet.grid(row=0,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_tweet = TK.Button(text=u'Twitter',font=("",fontsize),bg='cyan',command=self.display_tweet)
+        self.bt_tweet.grid(row=0,column=4,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_dep = TK.Button(text=u'Departure',font=("",fontsize),bg='green2',command=self.departure)
-        self.bt_dep.grid(row=0,column=4,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_dep.grid(row=0,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='purple1',command=self.circleanime)
-        self.bt_circle.grid(row=1,column=0,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_circle.grid(row=1,column=0,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='magenta2',command=self.pulsingbrightness)
-        self.bt_pulb.grid(row=1,column=1,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_pulb.grid(row=1,column=3,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_pulc = TK.Button(text=u'PulsingColors',font=("",fontsize),bg='OrangeRed2',command=self.pulsingcolors)
-        self.bt_pulc.grid(row=1,column=2,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_pulc.grid(row=1,column=6,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='yellow2',command=self.volumebars)
-        self.bt_volume.grid(row=1,column=3,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_volume.grid(row=1,column=9,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         # DJリスト表示用
         self.message_label = TK.Label(text=u' --- ',font=("",16))
-        self.message_label.grid(row=3,column=0,columnspan=1,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.message_label.grid(row=2,column=0,columnspan=12,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_back = TK.Button(text=u'　　Back ❙◀　　',font=("",fontsize),bg='cyan',command=self.sub)
-        self.bt_back.grid(row=4,column=0,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_back.grid(row=3,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_start = TK.Button(text=u'　Start (Reset) ▶　',font=("",fontsize),bg='green2',command=self.djlist)
-        self.bt_start.grid(row=4,column=1,columnspan=2,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_start.grid(row=3,column=4,columnspan=4,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         self.bt_next = TK.Button(text=u'　　Next ▶❙　　',font=("",fontsize),bg='Khaki',command=self.add)
-        self.bt_next.grid(row=4,column=2,columnspan=2,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_next.grid(row=3,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         # 停止ボタン
         self.bt_stop = TK.Button(text=u'　停　止　Stop ■　',font=("",fontsize),bg='IndianRed1',command=self.stop_led)
-        self.bt_stop.grid(row=3,column=0,columnspan=1,padx=dx,pady=20,sticky=TK.W + TK.E)
+        self.bt_stop.grid(row=4,column=0,columnspan=12,padx=dx,pady=20,sticky=TK.W + TK.E)
 
     # LED停止用
     def stop_led(self):
