@@ -68,6 +68,7 @@ class Led_Setup(object):
 
         # リスト長を取得 (-1)
         self.djlist_len = len(self.dj_name) - 1
+        print(self.djlist_len)
 
         ####################
 
@@ -702,7 +703,7 @@ class DJList(object):
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,text_low)
 
             low_x -= 1
-            count += 1
+            count += 0.5
             continuum += 1
 
             if count > 200:
@@ -720,7 +721,7 @@ class DJList(object):
                 text_low = led.dj_comment[led.djlist_num]
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
-            time.sleep(0.02)
+            time.sleep(0.01)
 
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
