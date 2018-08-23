@@ -5,7 +5,7 @@ import sys,os,time,math,random,tweepy,io
 from datetime import datetime as dt
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageSequence
 
 class Led_Setup(object):
 
@@ -745,17 +745,20 @@ class GifPlayer(object):
     @staticmethod
     def run(led):
         imgs = Image.open(led.gif_path).convert('RGB')
+        frames = frame.copy() for frame in ImageSequence.Iterator(imgs)
         #imgs = imgs.resize((led._width,led._height))
         #print(imgs.info.loop)
         #imgs_len = imgs.n_frames
+        i = 0
 
         while led.stopper:
             led.canvas.Clear()
 
             try:
-                led.canvas.SetImage(imgs.seek(imgs.tell()+1),0,0)
-            except EOFError:
-                led.canvas.SetImage(imgs.seek(0),0,0)
+                led.canvas.SetImage(frames[i],0,0)
+            except:
+                i = 0
+                led.canvas.SetImage(frames[i],0,0)
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(1/30)
