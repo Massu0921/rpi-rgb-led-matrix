@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import Tkinter as TK
-import tkFileDialog as FD
 import threading,time
 import modules
+import Tkinter as TK
+import tkFileDialog as FD
 
 #####################################################################
 # LEDJ操作GUI
@@ -77,7 +77,7 @@ class GUI(TK.Frame,LED):
 
         # LEDJ x VJ
         self.fr_gif = TK.LabelFrame(text='GifPlayer',font=("",20))
-        self.fr_gif.grid(columnspan=12,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.fr_gif.grid(padx=dx,pady=20,sticky=TK.W+TK.E)
         self.ent_gif = TK.Entry(self.fr_gif,font=("",20)).pack()
         self.bt_gif = TK.Button(self.fr_gif,text=u'Browse',font=("",16),command=self.browse).pack()
         self.bt_gifplay = TK.Button(self.fr_gif,text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer).pack()
