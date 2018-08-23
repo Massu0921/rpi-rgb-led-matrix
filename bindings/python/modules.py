@@ -484,7 +484,7 @@ class CircleAnime(object):
                 circleimgs = drawcircle()
             time.sleep(0.015)
 
-        #終了時ブラックスクリーンに
+        # 終了時ブラックスクリーンに
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
@@ -744,8 +744,23 @@ class GifPlayer(object):
 
     @staticmethod
     def run(led):
-        pass
+        imgs = Image.open(led.gif_path).convert('RGB')
+        imgs = gif_img.resize((led._width,led._height))
+        imgs_len = len(imgs)
 
+        while led.stopper:
+            led.canvas.Clear()
+
+            led.canvas.SetImage(imgs[i],0,0)
+
+            i += 1
+            if i < imgs_len:
+                i = 0
+
+            time.sleep(1/30)
+
+        led.canvas.Clear()
+        led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
 """
 # DJ名・セトリ・時計表示
