@@ -78,9 +78,16 @@ class GUI(TK.Frame,LED):
         # LEDJ x VJ
         self.fr_gif = TK.LabelFrame(text='GifPlayer',font=("",20))
         self.fr_gif.grid(padx=dx,pady=20,sticky=TK.W+TK.E)
-        self.ent_gif = TK.Entry(self,self.fr_gif,font=("",20)).pack()
-        self.bt_gif = TK.Button(self.fr_gif,text=u'Browse',font=("",16),command=self.browse).pack()
-        self.bt_gifplay = TK.Button(self.fr_gif,text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer).pack()
+        # ボタンの後にgridしないとエラー
+        self.ent_gif = TK.Entry(self,self.fr_gif,font=("",20))
+
+        self.bt_gif = TK.Button(self.fr_gif,text=u'Browse',font=("",16),command=self.browse)
+        self.bt_gif.grid(column=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+
+        self.bt_gifplay = TK.Button(self.fr_gif,text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer)
+        self.bt_gifplay.grid(column=3,padx=dx,pady=20,sticky=TK.W+TK.E)
+        # ここでEntry配置
+        self.ent_gif.grid(column=1,=dx,pady=20,sticky=TK.W+TK.E)
 
 
     # LED停止用
