@@ -745,8 +745,10 @@ class GifPlayer(object):
     @staticmethod
     def run(led):
         imgs = Image.open(led.gif_path).convert('RGB')
-        imgs = gif_img.resize((led._width,led._height))
+        imgs = imgs.resize((led._width,led._height))
         imgs_len = len(imgs)
+
+        i = 0
 
         while led.stopper:
             led.canvas.Clear()
