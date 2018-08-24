@@ -204,12 +204,14 @@ class Introduction(object):
             return red,green,blue
 
         #リスト表示内容
-        text1 = u'音楽研究同好会'
-        text2 = u'音楽が好きな人は、音研に入ろう！　DJしてみない？作曲してみない？　音研はいいぞ！！！'
-        text3 = u'デザイン同好会'
-        text4 = u'＜想像を創造しよう！＞　自分のアイディアを形にしたいと思ったら！デザイン同好会へ！レッツエンジョイ高専ライフ！'
-        text5 = u'LEDJ同好会（非公式）'
-        text6 = u'LEDマンになってみない？　DJイベントをLEDで盛り上げよう！'
+        text1 = u'Bunpatsu DJ 2018'
+        text2 = u''
+        """
+        text3 = u''
+        text4 = u''
+        text5 = u''
+        text6 = u''
+        """
 
         out1 = text1
         out2 = text2
@@ -218,7 +220,7 @@ class Introduction(object):
         pos1 = led._width
 
         #ループカウント用
-        count = 0
+        #count = 0
         continuum = 0
 
         #リスト表示（初回用）
@@ -231,6 +233,7 @@ class Introduction(object):
 
             if (pos1 + len < 0):
                 pos1 = led._width
+                """
                 if count % 3 == 0:
                     out1 = text3
                     out2 = text4
@@ -242,6 +245,7 @@ class Introduction(object):
                     out2 = text2
 
                 count += 1
+                """
 
             continuum += 1
 
