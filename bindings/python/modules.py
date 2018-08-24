@@ -138,6 +138,7 @@ class Streaming(tweepy.StreamListener):
 
             #ユーザーアイコンURL格納
             self.usr_icon_url.append(status.user.profile_image_url_https.replace('_normal',''))
+            print(self.usr_icon_url)
 
         else:
             pass
@@ -745,7 +746,7 @@ class GifPlayer(object):
     @staticmethod
     def run(led):
         imgs = Image.open(led.gif_path).convert('RGB')
-        frames = (frame.copy() for frame in ImageSequence.Iterator(imgs))
+        #frames = (frame.copy() for frame in ImageSequence.Iterator(imgs))
         #imgs = imgs.resize((led._width,led._height))
         #print(imgs.info.loop)
         #imgs_len = imgs.n_frames
