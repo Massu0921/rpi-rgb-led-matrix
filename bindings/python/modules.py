@@ -6,6 +6,7 @@ from datetime import datetime as dt
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from PIL import Image, ImageDraw, ImageSequence
+from urllib2 import *
 
 class Led_Setup(object):
 
@@ -138,7 +139,6 @@ class Streaming(tweepy.StreamListener):
 
             #ユーザーアイコンURL格納
             self.usr_icon_url.append(status.user.profile_image_url_https.replace('_normal',''))
-            print(self.usr_icon_url)
 
         else:
             pass
