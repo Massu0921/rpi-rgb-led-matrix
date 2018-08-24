@@ -397,6 +397,7 @@ class DisplayTweet(object):
                     #プロフィール画像取得
                     try:
                         usr_icon_read = urlopen(streaming.usr_icon_url[i]).read()
+                        print('okokokokko')
                         usr_icon_bin = io.BytesIO(usr_icon_read)
                         usr_icon_img_bf = Image.open(usr_icon_bin).convert('RGB')
                         usr_icon_img = usr_icon_img_bf.resize((32,32))
