@@ -90,9 +90,11 @@ class GUI(TK.Frame,LED):
         self.ent_gif.grid(row=5,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W+TK.E)
 
         # 実装見送り
+        """
         self.ent_gif.configure(state=TK.DISABLED)
         self.bt_gif.configure(state=TK.DISABLED)
         self.bt_gifplay.configure(state=TK.DISABLED)
+        """
 
 
     # LED停止用
