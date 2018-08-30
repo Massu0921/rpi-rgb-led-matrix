@@ -749,7 +749,8 @@ class GifPlayer(object):
 
     @staticmethod
     def run(led):
-        imgs = Image.open(led.gif_path).convert('RGB')
+        imgs = Image.open(led.gif_path)
+        imgs = imgs.convert('RGB')
         imgs = imgs.resize((led._width,led._height))
 
         while led.stopper:
@@ -757,10 +758,13 @@ class GifPlayer(object):
 
             led.canvas.SetImage(imgs,0,0)
             try:
+                imgs.seek(imgs.tell() + 1)
                 imgs = imgs.convert('RGB')
                 imgs = imgs.resize((led._width,led._height))
             except:
-                なにｋ
+                imgs.seek()
+                imgs = imgs.convert('RGB')
+                imgs = imgs.resize((led._width,led._height))
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(1/30)
 
