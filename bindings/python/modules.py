@@ -757,14 +757,21 @@ class GifPlayer(object):
             led.canvas.Clear()
 
             led.canvas.SetImage(imgs,0,0)
+
+            imgs.seek(imgs.tell() + 1)
+            imgs = imgs.convert('RGB')
+            imgs = imgs.resize((led._width,led._height))
+            """
             try:
                 imgs.seek(imgs.tell() + 1)
                 imgs = imgs.convert('RGB')
                 imgs = imgs.resize((led._width,led._height))
+
             except:
                 imgs.seek()
                 imgs = imgs.convert('RGB')
                 imgs = imgs.resize((led._width,led._height))
+            """
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(1/30)
 
