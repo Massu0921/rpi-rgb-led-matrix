@@ -752,15 +752,14 @@ class GifPlayer(object):
         # gifファイルを開く
         try:
             gif_imgs = Image.open(led.gif_path)
+            # 型を保持するため、2つに分ける
+            # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
+            gif_frame = gif_imgs.convert('RGB') # LED用にRGBに変換
+            gif_frame = gif_frame.resize((led._width,led._height))
         # 失敗した場合,LED停止
         except:
             print('Cannot Open!!!')
             led.stopper = False
-
-        # 型を保持するため、2つに分ける
-        # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
-        gif_frame = gif_imgs.convert('RGB') # LED用にRGBに変換
-        gif_frame = gif_frame.resize((led._width,led._height))
 
         while led.stopper:
             led.canvas.Clear()
@@ -772,7 +771,7 @@ class GifPlayer(object):
                 gif_frame = gif_imgs.convert('RGB')
                 gif_frame = gif_frame.resize((led._width,led._height))
 
-            except:
+            except EOFError:
                 gif_imgs.seek(0)
                 gif_frame = gif_imgs.convert('RGB')
                 gif_frame = gif_frame.resize((led._width,led._height))
