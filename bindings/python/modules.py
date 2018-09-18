@@ -756,6 +756,16 @@ class GifPlayer(object):
             # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
             gif_frame = gif_imgs.convert('RGB') # LED用にRGBに変換
             gif_frame = gif_frame.resize((led._width,led._height))
+
+            # フレーム数確認
+            f = 0
+            while True:
+                try:
+                    gif_imgs.seek(gif_imgs.tell()+1)
+                    f += 1
+                except EOFError:
+                    break
+
         # 失敗した場合,LED停止
         except:
             print('Cannot Open!!!')
@@ -766,6 +776,14 @@ class GifPlayer(object):
 
             led.canvas.SetImage(gif_frame,0,0)
 
+            if gif_imgs.tell() + 1 < f:
+                gif_imgs.seek(gif_imgs.tell() + 1)
+            else:
+                gif_imgs.seek(0)
+            gif_frame = gif_imgs.convert('RGB')
+            gif_frame = gif_frame.resize((led._width,led._height))
+
+            """
             try:
                 gif_imgs.seek(gif_imgs.tell() + 1)
                 gif_frame = gif_imgs.convert('RGB')
@@ -775,6 +793,7 @@ class GifPlayer(object):
                 gif_imgs.seek(0)
                 gif_frame = gif_imgs.convert('RGB')
                 gif_frame = gif_frame.resize((led._width,led._height))
+            """
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(1/30)
