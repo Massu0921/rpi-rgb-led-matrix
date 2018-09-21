@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys,os,time,math,random,tweepy,io
-from datetime import datetime as dt
+import sys,os,time,math,random,tweepy,io,re
+#from datetime import datetime as dt
 
 from rgbmatrix import RGBMatrix, RGBMatrixOptions, graphics
 from PIL import Image, ImageDraw, ImageSequence
@@ -133,7 +133,9 @@ class Streaming(tweepy.StreamListener):
             if 'RT' in status.text.replace(self.hashtag,''):
                 return True
             #置換処理・リストに追加
-            self.tweet_text.append(status.text.replace('\n',' ').replace('#' + self.hashtag,'').replace(u'＃' + self.hashtag,''))
+            status.text = status.text.replace('\n',' ').replace('#' + self.hashtag,'').replace(u'＃' + self.hashtag,'') # 改行文字, ハッシュタグ除外
+            status.text = re.sub('https?://[^\ ]*','',status.text) # 正規表現でURLを除外
+            self.tweet_text.append(status.text)
             self.names.append(status.user.name)
             self.scr_names.append('@' + status.user.screen_name)
 
@@ -144,7 +146,6 @@ class Streaming(tweepy.StreamListener):
             pass
 
         #正常終了、Falseを返すと終了
-        #現段階でFalseを返すことはなさそう
         return True
 
     def on_error(self, status_code):
