@@ -676,9 +676,6 @@ class DJList(object):
         genre = led.dj_genre[led.djlist_num]
         comment = led.dj_comment[led.djlist_num]
 
-        # 座標保持
-        save_x = 0
-
         # リスト確認・座標リセット用
         save_num = led.djlist_num
 
@@ -716,7 +713,6 @@ class DJList(object):
             led.canvas.Clear()
 
             red,green,blue = rainbow(continuum)
-            save_x = len
 
             graphics.DrawText(led.canvas,led.gothic,129,14,graphics.Color(red,green,blue),genre)
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,comment)
