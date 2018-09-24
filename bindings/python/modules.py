@@ -40,7 +40,7 @@ class Led_Setup(object):
         self.icon_twitter_width,self.icon_twitter_height = self.icon_twitter.size
 
         # TT用画像
-        self.atos = Image.open("Resources/bunpatsu_atos.ppm").convert('RGB')
+        self.atos = Image.open("Resources/kdj/kdj-tt.png").convert('RGB')
 
         ###################
 
@@ -664,14 +664,17 @@ class DJList(object):
 
     @staticmethod
     def run(led):
-        # レインボー用カウント
-        continuum = 0
+
+        # 画像読み込み用
+        def imgload(name):
+            dr = u'Resources/kdj/' + name + u'.png'
+            img = Image.open(dr).convert('RGB')
+            return img
 
         # 初期設定
-        text_up1 = u'  次は  '
-        text_up2 = led.dj_name[led.djlist_num] + '  '
-        text_up3 = led.dj_genre[led.djlist_num]
-        text_low = led.dj_comment[led.djlist_num]
+        name_img = imgload(led.dj_name[led.djlist_num])
+        genre = led.dj_genre[led.djlist_num]
+        comment = led.dj_comment[led.djlist_num]
 
         # 座標保持
         save_x = 0
@@ -682,8 +685,8 @@ class DJList(object):
         # 初期座標
         low_x = led._width
 
-        # 表示切り替え用
-        count = 0
+        # レインボー用カウント
+        continuum = 0
 
         # レインボー表示
         def rainbow(continuum):
@@ -713,29 +716,21 @@ class DJList(object):
             led.canvas.Clear()
 
             red,green,blue = rainbow(continuum)
-            len = graphics.DrawText(led.canvas,led.gothic,0,14,led.green,text_up1)
             save_x = len
-            len = graphics.DrawText(led.canvas,led.gothic,save_x,14,graphics.Color(red,green,blue),text_up2)
-            len = graphics.DrawText(led.canvas,led.gothic,save_x+len,14,led.blue,text_up3)
-            len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,text_low)
+
+            graphics.DrawText(led.canvas,led.gothic,129,14,graphics.Color(red,green,blue),genre)
+            len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,comment)
+            led.canvas.SetImage(name_img,0,0)
 
             low_x -= 1
-            count += 0.5
             continuum += 1
 
-            if count > 200:
-                count = 0
-            if count <= 100:
-                text_up1 = u'  次は  '
-                text_up2 = led.dj_name[led.djlist_num] + '  '
-                text_up3 = led.dj_genre[led.djlist_num]
-            elif count > 100 and count <= 200:
-                text_up1 = u'  Next  '
-                text_up2 = led.dj_name[led.djlist_num] + '  '
-                text_up3 = led.dj_genre[led.djlist_num]
+            name_img = imgload(led.dj_name[led.djlist_num])
+            genre = led.dj_genre[led.djlist_num]
+
             if len + low_x < 0 or not save_num == led.djlist_num:
                 low_x = led._width
-                text_low = led.dj_comment[led.djlist_num]
+                comment = led.dj_comment[led.djlist_num]
 
             save_num = led.djlist_num
 
