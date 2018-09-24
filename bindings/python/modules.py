@@ -685,6 +685,9 @@ class DJList(object):
         # レインボー用カウント
         continuum = 0
 
+        # ジャンル中央揃え用
+        gen_len = 999
+
         # レインボー表示
         def rainbow(continuum):
             continuum %= 3 * 255
@@ -714,7 +717,9 @@ class DJList(object):
 
             red,green,blue = rainbow(continuum)
 
-            graphics.DrawText(led.canvas,led.gothic,129,14,graphics.Color(red,green,blue),genre)
+            # ジャンルを中央揃えするように
+            len = graphics.DrawText(led.canvas,led.gothic,224-gen_len,14,graphics.Color(red,green,blue),genre)
+            gen_ken = len
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,comment)
             led.canvas.SetImage(name_img,0,0)
 
@@ -723,6 +728,9 @@ class DJList(object):
 
             name_img = imgload(led.dj_name[led.djlist_num])
             genre = led.dj_genre[led.djlist_num]
+
+            if not save_num == led.djlist_num:
+                gen_len = 999
 
             if len + low_x < 0 or not save_num == led.djlist_num:
                 low_x = led._width
