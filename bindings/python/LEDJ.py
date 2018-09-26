@@ -42,8 +42,8 @@ class GUI(TK.Frame,LED):
         self.bt_tweet = TK.Button(text=u'Twitter',font=("",fontsize),bg='cyan',command=self.display_tweet)
         self.bt_tweet.grid(row=0,column=4,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_dep = TK.Button(text=u'Departure',font=("",fontsize),bg='green2',command=self.departure)
-        self.bt_dep.grid(row=0,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_djtt = TK.Button(text=u'DJTT',font=("",fontsize),bg='green2',command=self.djtt)
+        self.bt_djtt.grid(row=0,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='purple1',command=self.circleanime)
         self.bt_circle.grid(row=1,column=0,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
@@ -156,10 +156,10 @@ class GUI(TK.Frame,LED):
         th_led.start()
 
     # 発車標
-    def departure(self):
+    def djtt(self):
         self.led.stopper = False
         time.sleep(0.5)
-        th_led = threading.Thread(target = modules.Departure.run,args=(self.led,))
+        th_led = threading.Thread(target = modules.DJTT.run,args=(self.led,))
         th_led.setDaemon(True)
         self.led.stopper = True
         th_led.start()
