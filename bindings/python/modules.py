@@ -256,19 +256,19 @@ class Introduction(object):
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
-# 発車標TT
-class Departure(object):
+# DJタイムテーブル
+class DJTT(object):
     # 発車標メソッド
     @staticmethod
     def run(led):
         #画像サイズ取得
         img_width,img_height = led.atos.size
 
-        # 発車標用座標
+        # TT用座標
         x = 0
         y = -32
 
-        # 発車標表示時間
+        # TT表示時間
         wait1 = 5
 
         # ループカウント用
@@ -295,12 +295,12 @@ class Departure(object):
                 time.sleep(0.1)
                 waiting += 0.1
 
-            #ループカウントリセット
+            # ループカウントリセット
             waiting = 0
             count = 1
             y -= 16
 
-            #終端判定・リスト・団体表示
+            # 終端判定・リスト・団体表示
             if y <= -img_height:
 
                 while led.stopper and waiting <= wait1:
@@ -310,7 +310,7 @@ class Departure(object):
                     time.sleep(0.1)
                     waiting += 0.1
 
-                #ループカウント・座標リセット
+                # ループカウント・座標リセット
                 waiting = 0
                 count = 1
                 y = -32
