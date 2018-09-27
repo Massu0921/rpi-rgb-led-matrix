@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+tt_img#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sys,os,time,math,random,tweepy,io,re
@@ -40,7 +40,7 @@ class Led_Setup(object):
         self.icon_twitter_width,self.icon_twitter_height = self.icon_twitter.size
 
         # TT用画像
-        self.atos = Image.open("Resources/kdj/kdj-tt.png").convert('RGB')
+        self.tt_img = Image.open("Resources/kdj/kdj-tt.png").convert('RGB')
 
         ###################
 
@@ -264,7 +264,7 @@ class DJTT(object):
     @staticmethod
     def run(led):
         #画像サイズ取得
-        img_width,img_height = led.atos.size
+        img_width,img_height = led.tt_img.size
 
         # TT用座標
         x = 0
@@ -279,7 +279,7 @@ class DJTT(object):
         # 団体表示（初回用）
         while led.stopper and waiting <= wait1:
             led.canvas.Clear()
-            led.canvas.SetImage(led.atos,x,0)
+            led.canvas.SetImage(led.tt_img,x,0)
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(0.1)
             waiting += 0.1
@@ -292,7 +292,7 @@ class DJTT(object):
 
             while led.stopper and waiting <= wait1:
                 led.canvas.Clear()
-                led.canvas.SetImage(led.atos,x,y)
+                led.canvas.SetImage(led.tt_img,x,y)
                 led.canvas = led.matrix.SwapOnVSync(led.canvas)
                 time.sleep(0.1)
                 waiting += 0.1
@@ -307,7 +307,7 @@ class DJTT(object):
 
                 while led.stopper and waiting <= wait1:
                     led.canvas.Clear()
-                    led.canvas.SetImage(led.atos,x,0)
+                    led.canvas.SetImage(led.tt_img,x,0)
                     led.canvas = led.matrix.SwapOnVSync(led.canvas)
                     time.sleep(0.1)
                     waiting += 0.1
