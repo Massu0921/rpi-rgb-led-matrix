@@ -756,7 +756,10 @@ class GifPlayer(object):
             frame_len = led.gif_frame_len
 
             # フレーム間待機時間
-            duration = gif_imgs.info['duration'] * 0.001 / 1.5
+            if gif_imgs.info['duration']:
+                duration = gif_imgs.info['duration'] * 0.001 / 1.5
+            else:
+                duration = 0.01
 
             # 型を保持するため、2つに分ける
             # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
