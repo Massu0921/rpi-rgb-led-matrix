@@ -4,6 +4,7 @@ import threading,time
 import modules
 import Tkinter as TK
 import tkFileDialog as FD
+from PIL import Image
 
 #####################################################################
 # LEDJ操作GUI
@@ -212,13 +213,26 @@ class GUI(TK.Frame,LED):
         # ファイル名取得
         #ftypes = [(u'画像ファイル','*.png;*.jpg;*.ppm;*.gif')] # ファイルタイプ指定
         gif_path = FD.askopenfilename() #(filetypes=ftypes)
-        # dirが存在
-        if gif_path:
-            # Entryにdirを表示
-            self.ent_gif.delete(0,TK.END)
-            self.ent_gif.insert(0,gif_path)
-            # gifへのpathの受け渡し
-            self.led.gif_path = gif_path
+
+        # Entryにdirを表示
+        self.ent_gif.delete(0,TK.END)
+        self.ent_gif.insert(0,gif_path)
+        
+        # gif読み込み
+        try:
+            self.led.gif = Image.open(gif_path)
+        except:
+            print('Cannot Open!!!')
+            return
+
+        # フレーム数確認
+        led.gif_frame_len = 0
+        while True:
+            try:
+                gif_imgs.seek(gif_imgs.tell()+1)
+                led.gif_frame_len += 1
+            except EOFError:
+                break
 
 if __name__ == '__main__':
     gui = GUI()
