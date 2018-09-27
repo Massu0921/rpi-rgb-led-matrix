@@ -757,7 +757,7 @@ class GifPlayer(object):
 
             # フレーム間待機時間
             try:
-                duration = gif_imgs.info['duration'] * 0.001 / 1.5
+                duration = gif_imgs.info['duration'] * 0.0001
             except:
                 duration = 0.01
 
