@@ -206,8 +206,10 @@ class Introduction(object):
             return red,green,blue
 
         #リスト表示内容
-        text1 = u'Bunpatsu DJ 2018'
-        text2 = u''
+        text1 = u'kosendj #20'
+        text2 = u'今回はゲストに nora2r氏、Epsilon氏、 Saqwz氏を迎えたほか、新入部員も迎え、 \
+        爆アガり間違いなしとなっております！\
+         @sabaco (¥2,000/1drink)'
         """
         text3 = u''
         text4 = u''
