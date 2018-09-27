@@ -756,9 +756,9 @@ class GifPlayer(object):
             frame_len = led.gif_frame_len
 
             # フレーム間待機時間
-            if gif_imgs.info['duration']:
+            try:
                 duration = gif_imgs.info['duration'] * 0.001 / 1.5
-            else:
+            except:
                 duration = 0.01
 
             # 型を保持するため、2つに分ける
