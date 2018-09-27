@@ -210,8 +210,8 @@ class GUI(TK.Frame,LED):
     # Brouse Window
     def browse(self):
         # ファイル名取得
-        ftypes = [(u'画像ファイル','*.png;*.jpg;*.ppm;*.gif')] # ファイルタイプ指定
-        gif_path = FD.askopenfilename(filetypes=ftypes)
+        #ftypes = [(u'画像ファイル','*.png;*.jpg;*.ppm;*.gif')] # ファイルタイプ指定
+        gif_path = FD.askopenfilename() #(filetypes=ftypes)
         # dirが存在
         if gif_path:
             # Entryにdirを表示
