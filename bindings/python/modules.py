@@ -719,7 +719,7 @@ class DJList(object):
 
             # ジャンルを中央揃えするように
             len = graphics.DrawText(led.canvas,led.gothic,224-gen_len,14,graphics.Color(red,green,blue),genre)
-            gen_ken = len
+            gen_len = len / 2
             len = graphics.DrawText(led.canvas,led.gothic,low_x,30,led.white,comment)
             led.canvas.SetImage(name_img,0,0)
 
