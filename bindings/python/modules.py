@@ -72,8 +72,9 @@ class Led_Setup(object):
 
         ####################
 
-        # Gifファイルパス用
-        self.gif_path = ''
+        # Gif用
+        self.gif = None
+        self.gif_frame_len = None
 
         # LED長さ
         self._width  = self.canvas.width
@@ -750,25 +751,17 @@ class GifPlayer(object):
     @staticmethod
     def run(led):
         # gifファイルを開く
-        try:
-            gif_imgs = Image.open(led.gif_path)
+        if led.gif:
+            gif_imgs = led.gif
+
+            # フレーム間待機時間
+            duration = gif_imgs.info['duration'] * 0.001
+
             # 型を保持するため、2つに分ける
             # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
             gif_frame = gif_imgs.convert('RGB') # LED用にRGBに変換
             gif_frame = gif_frame.resize((led._width,led._height))
-
-            # フレーム数確認
-            f = 0
-            while True:
-                try:
-                    gif_imgs.seek(gif_imgs.tell()+1)
-                    f += 1
-                except EOFError:
-                    break
-
-        # 失敗した場合,LED停止
-        except:
-            print('Cannot Open!!!')
+        else:
             led.stopper = False
 
         while led.stopper:
@@ -776,10 +769,11 @@ class GifPlayer(object):
 
             led.canvas.SetImage(gif_frame,0,0)
 
-            if gif_imgs.tell() + 1 < f:
+            if gif_imgs.tell() + 1 < led.gif_frame_len:
                 gif_imgs.seek(gif_imgs.tell() + 1)
             else:
                 gif_imgs.seek(0)
+
             gif_frame = gif_imgs.convert('RGB')
             gif_frame = gif_frame.resize((led._width,led._height))
 
@@ -796,7 +790,7 @@ class GifPlayer(object):
             """
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
-            time.sleep(1/30)
+            time.sleep(duration)
 
         led.canvas.Clear()
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
