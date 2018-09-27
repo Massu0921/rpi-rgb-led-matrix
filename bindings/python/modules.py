@@ -1,4 +1,4 @@
-tt_img#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sys,os,time,math,random,tweepy,io,re
