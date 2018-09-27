@@ -13,7 +13,7 @@ import tkFileDialog as FD
 
 # LEDインスタンス生成, ストリーミング開始
 class LED(object):
-    def __init__(self,chain=10,bright=40):
+    def __init__(self,chain=10,bright=50):
         self.led = modules.Led_Setup(chain,bright)
         print(u'32x32 {0} 枚、明るさ {1} で動作します'.format(chain,bright))
         self.streaming = modules.Streaming(u'kosendj')
