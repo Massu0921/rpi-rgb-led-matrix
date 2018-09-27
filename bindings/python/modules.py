@@ -753,9 +753,10 @@ class GifPlayer(object):
         # gifファイルを開く
         if led.gif:
             gif_imgs = led.gif
+            frame_len = led.gif_frame_len
 
             # フレーム間待機時間
-            duration = gif_imgs.info['duration'] * 0.001
+            duration = gif_imgs.info['duration'] * 0.001 / 1.5
 
             # 型を保持するため、2つに分ける
             # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
@@ -769,7 +770,7 @@ class GifPlayer(object):
 
             led.canvas.SetImage(gif_frame,0,0)
 
-            if gif_imgs.tell() + 1 < led.gif_frame_len:
+            if gif_imgs.tell() + 1 < frame_len:
                 gif_imgs.seek(gif_imgs.tell() + 1)
             else:
                 gif_imgs.seek(0)
