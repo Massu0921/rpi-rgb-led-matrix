@@ -217,7 +217,7 @@ class GUI(TK.Frame,LED):
         # Entryにdirを表示
         self.ent_gif.delete(0,TK.END)
         self.ent_gif.insert(0,gif_path)
-        
+
         # gif読み込み
         try:
             self.led.gif = Image.open(gif_path)
@@ -226,11 +226,11 @@ class GUI(TK.Frame,LED):
             return
 
         # フレーム数確認
-        led.gif_frame_len = 0
+        self.led.gif_frame_len = 0
         while True:
             try:
-                gif_imgs.seek(gif_imgs.tell()+1)
-                led.gif_frame_len += 1
+                self.led.gif.seek(self.led.gif.tell()+1)
+                self.led.gif_frame_len += 1
             except EOFError:
                 break
 
