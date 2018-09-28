@@ -210,7 +210,7 @@ class Introduction(object):
         #リスト表示内容
         text1 = u'kosendj-bu #20'
         text2 = u'今回はゲストに nora2r氏、Epsilon氏、 Saqwz氏を迎えたほか、新入部員も迎え、\
-爆アガり間違いなしとなっております！　14:00 - 20:00 @sabaco (¥2,000/1drink)'
+爆アガり間違いなしとなっております！　14:00 - 19:40 @sabaco (¥2,000/1drink)'
         """
         text3 = u''
         text4 = u''
@@ -785,7 +785,8 @@ class MediaPlayer(object):
                 led.canvas.SetImage(frame,-x,0)
                 led.canvas.SetImage(frame,-x + frame.size[0],0)
             else:
-                led.canvas.SetImage(frame,0,0)
+                # 現段階では中央に配置、今後は切り替えできるように
+                led.canvas.SetImage(frame,led._width / 2 - frame.size[0] / 2,0)
 
             if imgs.tell() + 1 < frame_len:
                 imgs.seek(imgs.tell() + 1)
