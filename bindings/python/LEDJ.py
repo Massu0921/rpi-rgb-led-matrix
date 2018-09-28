@@ -110,7 +110,7 @@ class GUI(TK.Frame,LED):
         self.blv_resize = TK.BooleanVar()
         # Set
         self.blv_scroll.set(False)
-        self.blv_resize.set(True)
+        self.blv_resize.set(False)
 
         self.ck_scroll = TK.Checkbutton(text=u'Scroll Media',font=("",22),variable=self.blv_scroll)
         self.ck_scroll.grid(row=7,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
@@ -248,13 +248,10 @@ class GUI(TK.Frame,LED):
     # Deck 1
     def browse_1(self):
         # ファイル名取得
-        if self.ent_media_1.get() == '':
-            img_path = FD.askopenfilename(initialdir='/home/pi/rpi-rgb-led-matrix/bindings/python/Resources/')
-            # Entryにdirを表示
-            self.ent_media_1.delete(0,TK.END)
-            self.ent_media_1.insert(0,img_path)
-        else:
-            img_path = self.ent_media_1.get()
+        img_path = FD.askopenfilename(initialdir='/home/pi/rpi-rgb-led-matrix/bindings/python/Resources/')
+        # Entryにdirを表示
+        self.ent_media_1.delete(0,TK.END)
+        self.ent_media_1.insert(0,img_path)
 
         try:
             self.bt_mediaplay_1.configure(state=TK.DISABLED)
@@ -266,13 +263,10 @@ class GUI(TK.Frame,LED):
     # Deck 2
     def browse_2(self):
         # ファイル名取得
-        if self.ent_media_2.get() == '':
-            img_path = FD.askopenfilename(initialdir='/home/pi/Desktop/')
-            # Entryにdirを表示
-            self.ent_media_2.delete(0,TK.END)
-            self.ent_media_2.insert(0,img_path)
-        else:
-            img_path = self.ent_media_2.get()
+        img_path = FD.askopenfilename(initialdir='/home/pi/Desktop/')
+        # Entryにdirを表示
+        self.ent_media_2.delete(0,TK.END)
+        self.ent_media_2.insert(0,img_path)
 
         try:
             self.bt_mediaplay_2.configure(state=TK.DISABLED)
