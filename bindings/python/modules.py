@@ -751,14 +751,16 @@ class MediaPlayer(object):
 
     @staticmethod
     def run(led):
-        # gifファイルを開く
+        # Media読み込み
         if led.media:
             imgs = led.media
             frame_len = led.frame_len
 
             # フレーム間待機時間
+            # gif、その他拡張子の判定
             try:
-                duration = imgs.info['duration'] * 0.0001
+                duration = imgs.info['duration'] * 0.0001 # gif
+            # gif以外
             except:
                 duration = 0.01
 
