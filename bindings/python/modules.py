@@ -73,8 +73,8 @@ class Led_Setup(object):
         ####################
 
         # Gif用
-        self.gif = None
-        self.gif_frame_len = None
+        self.media = None
+        self.frame_len = None
 
         # LED長さ
         self._width  = self.canvas.width
@@ -747,52 +747,40 @@ class DJList(object):
         led.canvas = led.matrix.SwapOnVSync(led.canvas)
 
 # LEDJ x VJ
-class GifPlayer(object):
+class MediaPlayer(object):
 
     @staticmethod
     def run(led):
         # gifファイルを開く
-        if led.gif:
-            gif_imgs = led.gif
-            frame_len = led.gif_frame_len
+        if led.media:
+            imgs = led.media
+            frame_len = led.frame_len
 
             # フレーム間待機時間
             try:
-                duration = gif_imgs.info['duration'] * 0.0001
+                duration = imgs.info['duration'] * 0.0001
             except:
                 duration = 0.01
 
             # 型を保持するため、2つに分ける
-            # gif_imgs: PIL.GifImagePlugin.GifImageFile, gif_frame: PIL.Image.Image
-            gif_frame = gif_imgs.convert('RGB') # LED用にRGBに変換
-            gif_frame = gif_frame.resize((led._width,led._height))
+            # imgs: PIL.GifImagePlugin.GifImageFile, frame: PIL.Image.Image
+            frame = imgs.convert('RGB') # LED用にRGBに変換
+            frame = frame.resize((led._width,led._height))
         else:
             led.stopper = False
 
         while led.stopper:
             led.canvas.Clear()
 
-            led.canvas.SetImage(gif_frame,0,0)
+            led.canvas.SetImage(frame,0,0)
 
-            if gif_imgs.tell() + 1 < frame_len:
-                gif_imgs.seek(gif_imgs.tell() + 1)
+            if imgs.tell() + 1 < frame_len:
+                imgs.seek(imgs.tell() + 1)
             else:
-                gif_imgs.seek(0)
+                imgs.seek(0)
 
-            gif_frame = gif_imgs.convert('RGB')
-            gif_frame = gif_frame.resize((led._width,led._height))
-
-            """
-            try:
-                gif_imgs.seek(gif_imgs.tell() + 1)
-                gif_frame = gif_imgs.convert('RGB')
-                gif_frame = gif_frame.resize((led._width,led._height))
-
-            except EOFError:
-                gif_imgs.seek(0)
-                gif_frame = gif_imgs.convert('RGB')
-                gif_frame = gif_frame.resize((led._width,led._height))
-            """
+            frame = imgs.convert('RGB')
+            frame = frame.resize((led._width,led._height))
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(duration)
