@@ -72,9 +72,11 @@ class Led_Setup(object):
 
         ####################
 
-        # Gif用
+        # Media用
         self.media = None
         self.frame_len = None
+        self.bool_scroll = None
+        self.bool_resize = None
 
         # LED長さ
         self._width  = self.canvas.width
