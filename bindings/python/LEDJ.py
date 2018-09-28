@@ -37,32 +37,34 @@ class GUI(TK.Frame,LED):
         dx = 20
         dy = 10
 
-        self.bt_intro = TK.Button(text=u'Introduction',font=("",fontsize),bg='Khaki',command=self.introduction)
+        self.bt_intro = TK.Button(text=u'Introduction',font=("",fontsize),bg='cyan',command=self.introduction)
         self.bt_intro.grid(row=0,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_tweet = TK.Button(text=u'Twitter',font=("",fontsize),bg='cyan',command=self.display_tweet)
         self.bt_tweet.grid(row=0,column=4,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_djtt = TK.Button(text=u'DJTT',font=("",fontsize),bg='green2',command=self.djtt)
+        self.bt_djtt = TK.Button(text=u'DJTT',font=("",fontsize),bg='cyan',command=self.djtt)
         self.bt_djtt.grid(row=0,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='purple1',command=self.circleanime)
+        self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='OrangeRed2',command=self.circleanime)
         self.bt_circle.grid(row=1,column=0,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='magenta2',command=self.pulsingbrightness)
+        self.bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='OrangeRed2',command=self.pulsingbrightness)
         self.bt_pulb.grid(row=1,column=3,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         self.bt_pulc = TK.Button(text=u'PulsingColors',font=("",fontsize),bg='OrangeRed2',command=self.pulsingcolors)
         self.bt_pulc.grid(row=1,column=6,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='yellow2',command=self.volumebars)
+        # 廃止(Gif置き換え) 後で撤去すること
+        self.bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='OrangeRed2',command=self.volumebars)
         self.bt_volume.grid(row=1,column=9,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
+        self.bt_volume.configure(state=TK.DISABLED)
 
         # DJリスト表示用
         self.message_label = TK.Label(text=u' --- ',font=("",16))
         self.message_label.grid(row=2,column=0,columnspan=12,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_back = TK.Button(text=u'　　Back ❙◀　　',font=("",fontsize),bg='cyan',command=self.sub)
+        self.bt_back = TK.Button(text=u'　　Back ❙◀　　',font=("",fontsize),bg='Khaki',command=self.sub)
         self.bt_back.grid(row=3,column=0,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
         self.bt_back.configure(state=TK.DISABLED)
 
@@ -77,26 +79,31 @@ class GUI(TK.Frame,LED):
         self.bt_stop.grid(row=4,column=0,columnspan=12,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         # LEDJ x VJ
-        #self.fr_gif = TK.LabelFrame(text='GifPlayer',font=("",20))
-        #self.fr_gif.grid(padx=dx,pady=20,sticky=TK.W+TK.E)
+        # フレーム配置は見送り
         # ボタンの後にgridしないとエラー
-        self.ent_gif = TK.Entry(font=("",16))#(self.fr_gif,font=("",16))
+        #*#* Deck 1 *#*#
+        self.ent_media_1 = TK.Entry(font=("",16))
 
-        self.bt_gif = TK.Button(text=u'Browse',font=("",16),command=self.browse)#(self.fr_gif,text=u'Browse',font=("",16),command=self.browse)
-        self.bt_gif.grid(row=5,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.bt_media_1 = TK.Button(text=u'Browse',font=("",16),command=self.browse_1)
+        self.bt_media_1.grid(row=5,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
 
-        self.bt_gifplay = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer)#(self.fr_gif,text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.gifplayer)
-        self.bt_gifplay.grid(row=5,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.bt_mediaplay_1 = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.mediaplayer)
+        self.bt_mediaplay_1.grid(row=5,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.bt_mediaplay_1.configure(state=TK.DISABLED)
         # ここでEntry配置
-        self.ent_gif.grid(row=5,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.ent_media_1.grid(row=5,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W+TK.E)
 
-        # 実装見送り
-        """
-        self.ent_gif.configure(state=TK.DISABLED)
-        self.bt_gif.configure(state=TK.DISABLED)
-        self.bt_gifplay.configure(state=TK.DISABLED)
-        """
+        #*#* Deck 2 *#*#
+        self.ent_media_2 = TK.Entry(font=("",16))
 
+        self.bt_media_2 = TK.Button(text=u'Browse',font=("",16),command=self.browse_2)
+        self.bt_media_2.grid(row=6,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+
+        self.bt_mediaplay_2 = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.mediaplayer)
+        self.bt_mediaplay_2.grid(row=6,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+        self.bt_mediaplay_2.configure(state=TK.DISABLED)
+
+        self.ent_media_2.grid(row=6,column=0,columnspan=8,padx=dx,pady=20,sticky=TK.W+TK.E)
 
     # LED停止用
     def stop_led(self):
@@ -176,11 +183,23 @@ class GUI(TK.Frame,LED):
 
         self.message_label.configure(text = self.led.dj_name[self.led.djlist_num])
 
-    # GifPlayer
-    def gifplayer(self):
+    # MediaPlayer
+    def mediaplayer_1(self):
+        led.media = self.media_1
+        led.frame_len = self.frame_len_1
         self.led.stopper = False
         time.sleep(0.5)
-        th_led = threading.Thread(target = modules.GifPlayer.run,args=(self.led,))
+        th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
+        th_led.setDaemon(True)
+        self.led.stopper = True
+        th_led.start()
+
+    def mediaplayer_2(self):
+        led.media = self.media_2
+        led.frame_len = self.frame_len_2
+        self.led.stopper = False
+        time.sleep(0.5)
+        th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
         th_led.setDaemon(True)
         self.led.stopper = True
         th_led.start()
@@ -208,31 +227,59 @@ class GUI(TK.Frame,LED):
 
         self.message_label.configure(text = self.led.dj_name[self.led.djlist_num])
 
-    # Brouse Window
-    def browse(self):
+    # File Browse
+    # Deck 1
+    def browse_1(self):
         # ファイル名取得
-        #ftypes = [(u'画像ファイル','*.png;*.jpg;*.ppm;*.gif')] # ファイルタイプ指定
-        gif_path = FD.askopenfilename() #(filetypes=ftypes)
+        if self.ent_media_1.get() == ''
+            img_path = FD.askopenfilename()
+            # Entryにdirを表示
+            self.ent_media_1.delete(0,TK.END)
+            self.ent_media_1.insert(0,img_path)
+        else:
+            img_path = self.ent_media_1.get()
 
-        # Entryにdirを表示
-        self.ent_gif.delete(0,TK.END)
-        self.ent_gif.insert(0,gif_path)
-
-        # gif読み込み
         try:
-            self.led.gif = Image.open(gif_path)
+            self.bt_mediaplay_1.configure(state=TK.DISABLED)
+            self.media_1,self.frame_len_1 = mediaopen(img_path)
+            self.bt_mediaplay_1.configure(state=TK.NORMAL)
         except:
-            print('Cannot Open!!!')
-            return
+            print('Deck1 Load Failed')
+
+    # Deck 2
+    def browse_2(self):
+        # ファイル名取得
+        if self.ent_media_2.get() == ''
+            img_path = FD.askopenfilename()
+            # Entryにdirを表示
+            self.ent_media_2.delete(0,TK.END)
+            self.ent_media_2.insert(0,img_path)
+        else:
+            img_path = self.ent_media_2.get()
+
+        try:
+            self.bt_mediaplay_2.configure(state=TK.DISABLED)
+            self.media_2,self.frame_len_2 = mediaopen(img_path)
+            self.bt_mediaplay_2.configure(state=TK.NORMAL)
+        except:
+            print('Deck2 Load Failed')
+
+
+    # Open Media
+    def mediaopen(img_path):
+        # Media読み込み
+        img = Image.open(img_path)
 
         # フレーム数確認
-        self.led.gif_frame_len = 0
+        frame_len = 0
         while True:
             try:
-                self.led.gif.seek(self.led.gif.tell()+1)
-                self.led.gif_frame_len += 1
+                img.seek(img.tell()+1)
+                frame_len += 1
             except EOFError:
                 break
+
+        return img,frame_len
 
 if __name__ == '__main__':
     gui = GUI()
