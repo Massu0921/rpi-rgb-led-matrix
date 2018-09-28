@@ -185,8 +185,8 @@ class GUI(TK.Frame,LED):
 
     # MediaPlayer
     def mediaplayer_1(self):
-        led.media = self.media_1
-        led.frame_len = self.frame_len_1
+        self.led.media = self.media_1
+        self.led.frame_len = self.frame_len_1
         self.led.stopper = False
         time.sleep(0.5)
         th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
@@ -195,8 +195,8 @@ class GUI(TK.Frame,LED):
         th_led.start()
 
     def mediaplayer_2(self):
-        led.media = self.media_2
-        led.frame_len = self.frame_len_2
+        self.led.media = self.media_2
+        self.led.frame_len = self.frame_len_2
         self.led.stopper = False
         time.sleep(0.5)
         th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
