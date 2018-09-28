@@ -753,6 +753,7 @@ class MediaPlayer(object):
 
     @staticmethod
     def run(led):
+        x = 0 # スクロール用
         # Media読み込み
         if led.media:
             imgs = led.media
@@ -769,14 +770,22 @@ class MediaPlayer(object):
             # 型を保持するため、2つに分ける
             # imgs: PIL.GifImagePlugin.GifImageFile, frame: PIL.Image.Image
             frame = imgs.convert('RGB') # LED用にRGBに変換
-            frame = frame.resize((led._width,led._height))
+            if led.bool_resize: # リサイズするか
+                frame = frame.resize((led._width,led._height))
         else:
             led.stopper = False
 
         while led.stopper:
             led.canvas.Clear()
 
-            led.canvas.SetImage(frame,0,0)
+            if led.bool_scroll:
+                x += 1
+                if x > frame.size[0]:
+                    x = 0
+                led.canvas.SetImage(frame,-x,0)
+                led.canvas.SetImage(frame,-x + frame.size[0],0)
+            else:
+                led.canvas.SetImage(frame,0,0)
 
             if imgs.tell() + 1 < frame_len:
                 imgs.seek(imgs.tell() + 1)
@@ -784,7 +793,8 @@ class MediaPlayer(object):
                 imgs.seek(0)
 
             frame = imgs.convert('RGB')
-            frame = frame.resize((led._width,led._height))
+            if led.bool_resize: #リサイズするか
+                frame = frame.resize((led._width,led._height))
 
             led.canvas = led.matrix.SwapOnVSync(led.canvas)
             time.sleep(duration)
