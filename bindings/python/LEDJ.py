@@ -112,10 +112,10 @@ class GUI(TK.Frame,LED):
         self.led.bool_scroll.set(False)
         self.led.bool_resize.set(True)
 
-        self.ck_scroll = TK.Checkbutton(text=u'Scroll Media',variable=self.led.bool_scroll)
+        self.ck_scroll = TK.Checkbutton(text=u'Scroll Media',font=("",16),variable=self.led.bool_scroll)
         self.ck_scroll.grid(row=7,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
 
-        self.ck_resize = TK.Checkbutton(text=u'resize',variable=self.led.bool_scroll)
+        self.ck_resize = TK.Checkbutton(text=u'resize',font=("",16),variable=self.led.bool_resize)
         self.ck_resize.grid(row=7,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
 
     # LED停止用
