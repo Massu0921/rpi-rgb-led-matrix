@@ -213,7 +213,7 @@ class GUI(TK.Frame,LED):
         self.led.media = self.media_2
         self.led.frame_len = self.frame_len_2
         self.led.bool_scroll = self.blv_scroll.get()
-        self.led.bool_resize = self.blv_scroll.get()
+        self.led.bool_resize = self.blv_resize.get()
         self.led.stopper = False
         time.sleep(0.5)
         th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
