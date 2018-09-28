@@ -780,10 +780,10 @@ class MediaPlayer(object):
 
             if led.bool_scroll:
                 x += 1
-                if x > frame.size[0]:
+                if x > led._width:
                     x = 0
                 led.canvas.SetImage(frame,-x,0)
-                led.canvas.SetImage(frame,-x + frame.size[0],0)
+                #led.canvas.SetImage(frame,-x + frame.size[0],0)
             else:
                 # 現段階では中央に配置、今後は切り替えできるように
                 led.canvas.SetImage(frame,led._width / 2 - frame.size[0] / 2,0)
