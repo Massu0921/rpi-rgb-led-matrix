@@ -87,7 +87,7 @@ class GUI(TK.Frame,LED):
         self.bt_media_1 = TK.Button(text=u'Browse',font=("",16),command=self.browse_1)
         self.bt_media_1.grid(row=5,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
 
-        self.bt_mediaplay_1 = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.mediaplayer)
+        self.bt_mediaplay_1 = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.mediaplayer_1)
         self.bt_mediaplay_1.grid(row=5,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
         self.bt_mediaplay_1.configure(state=TK.DISABLED)
         # ここでEntry配置
@@ -99,7 +99,7 @@ class GUI(TK.Frame,LED):
         self.bt_media_2 = TK.Button(text=u'Browse',font=("",16),command=self.browse_2)
         self.bt_media_2.grid(row=6,column=8,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
 
-        self.bt_mediaplay_2 = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.mediaplayer)
+        self.bt_mediaplay_2 = TK.Button(text=u'　Play ▶　',font=("",fontsize),bg='deep sky blue',command=self.mediaplayer_2)
         self.bt_mediaplay_2.grid(row=6,column=10,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
         self.bt_mediaplay_2.configure(state=TK.DISABLED)
 
@@ -231,7 +231,7 @@ class GUI(TK.Frame,LED):
     # Deck 1
     def browse_1(self):
         # ファイル名取得
-        if self.ent_media_1.get() == ''
+        if self.ent_media_1.get() == '':
             img_path = FD.askopenfilename()
             # Entryにdirを表示
             self.ent_media_1.delete(0,TK.END)
@@ -241,7 +241,7 @@ class GUI(TK.Frame,LED):
 
         try:
             self.bt_mediaplay_1.configure(state=TK.DISABLED)
-            self.media_1,self.frame_len_1 = mediaopen(img_path)
+            self.media_1,self.frame_len_1 = self.mediaopen(img_path)
             self.bt_mediaplay_1.configure(state=TK.NORMAL)
         except:
             print('Deck1 Load Failed')
@@ -249,7 +249,7 @@ class GUI(TK.Frame,LED):
     # Deck 2
     def browse_2(self):
         # ファイル名取得
-        if self.ent_media_2.get() == ''
+        if self.ent_media_2.get() == '':
             img_path = FD.askopenfilename()
             # Entryにdirを表示
             self.ent_media_2.delete(0,TK.END)
@@ -259,7 +259,7 @@ class GUI(TK.Frame,LED):
 
         try:
             self.bt_mediaplay_2.configure(state=TK.DISABLED)
-            self.media_2,self.frame_len_2 = mediaopen(img_path)
+            self.media_2,self.frame_len_2 = self.mediaopen(img_path)
             self.bt_mediaplay_2.configure(state=TK.NORMAL)
         except:
             print('Deck2 Load Failed')
