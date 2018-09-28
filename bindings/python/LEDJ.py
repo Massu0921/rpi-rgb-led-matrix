@@ -257,12 +257,18 @@ class GUI(TK.Frame,LED):
         else:
             img_path = self.ent_media_2.get()
 
+        self.bt_mediaplay_2.configure(state=TK.DISABLED)
+        self.media_2,self.frame_len_2 = self.mediaopen(img_path)
+        self.bt_mediaplay_2.configure(state=TK.NORMAL)
+        """
+
         try:
             self.bt_mediaplay_2.configure(state=TK.DISABLED)
             self.media_2,self.frame_len_2 = self.mediaopen(img_path)
             self.bt_mediaplay_2.configure(state=TK.NORMAL)
         except:
             print('Deck2 Load Failed')
+        """
 
 
     # Open Media
