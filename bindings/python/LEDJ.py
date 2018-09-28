@@ -46,17 +46,17 @@ class GUI(TK.Frame,LED):
         self.bt_djtt = TK.Button(text=u'DJTT',font=("",fontsize),bg='cyan',command=self.djtt)
         self.bt_djtt.grid(row=0,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='OrangeRed2',command=self.circleanime)
+        self.bt_circle = TK.Button(text=u'CircleAnime',font=("",fontsize),bg='orchid1',command=self.circleanime)
         self.bt_circle.grid(row=1,column=0,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='OrangeRed2',command=self.pulsingbrightness)
+        self.bt_pulb = TK.Button(text=u'PulsingBrightness',font=("",fontsize),bg='orchid1',command=self.pulsingbrightness)
         self.bt_pulb.grid(row=1,column=3,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
-        self.bt_pulc = TK.Button(text=u'PulsingColors',font=("",fontsize),bg='OrangeRed2',command=self.pulsingcolors)
+        self.bt_pulc = TK.Button(text=u'PulsingColors',font=("",fontsize),bg='orchid1',command=self.pulsingcolors)
         self.bt_pulc.grid(row=1,column=6,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         # 廃止(Gif置き換え) 後で撤去すること
-        self.bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='OrangeRed2',command=self.volumebars)
+        self.bt_volume = TK.Button(text=u'VolumeBars',font=("",fontsize),bg='orchid1',command=self.volumebars)
         self.bt_volume.grid(row=1,column=9,columnspan=3,padx=dx,pady=dy,sticky=TK.W + TK.E)
         self.bt_volume.configure(state=TK.DISABLED)
 
@@ -75,7 +75,7 @@ class GUI(TK.Frame,LED):
         self.bt_next.grid(row=3,column=8,columnspan=4,padx=dx,pady=dy,sticky=TK.W + TK.E)
 
         # 停止ボタン
-        self.bt_stop = TK.Button(text=u'　停　止　Stop ■　',font=("",fontsize),bg='IndianRed1',command=self.stop_led)
+        self.bt_stop = TK.Button(text=u'　停　止　Stop ■　',font=("",fontsize),bg='OrangeRed2',command=self.stop_led)
         self.bt_stop.grid(row=4,column=0,columnspan=12,padx=dx,pady=20,sticky=TK.W + TK.E)
 
         # LEDJ x VJ
@@ -232,7 +232,7 @@ class GUI(TK.Frame,LED):
     def browse_1(self):
         # ファイル名取得
         if self.ent_media_1.get() == '':
-            img_path = FD.askopenfilename()
+            img_path = FD.askopenfilename(initialdir='/home/pi/rpi-rgb-led-matrix/bindings/python/Resources/')
             # Entryにdirを表示
             self.ent_media_1.delete(0,TK.END)
             self.ent_media_1.insert(0,img_path)
@@ -250,7 +250,7 @@ class GUI(TK.Frame,LED):
     def browse_2(self):
         # ファイル名取得
         if self.ent_media_2.get() == '':
-            img_path = FD.askopenfilename()
+            img_path = FD.askopenfilename(initialdir='/home/pi/Desktop/')
             # Entryにdirを表示
             self.ent_media_2.delete(0,TK.END)
             self.ent_media_2.insert(0,img_path)
