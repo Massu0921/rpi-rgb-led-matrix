@@ -108,15 +108,20 @@ class GUI(TK.Frame,LED):
         # CheckBox
         self.blv_scroll = TK.BooleanVar()
         self.blv_resize = TK.BooleanVar()
+        self.blv_flash = TK.BooleanVar()
         # Set
         self.blv_scroll.set(False)
         self.blv_resize.set(False)
-
+        self.blv_flash.set(False)
+        # Scroll
         self.ck_scroll = TK.Checkbutton(text=u'Scroll Media',font=("",22),variable=self.blv_scroll)
         self.ck_scroll.grid(row=7,column=0,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
-
+        # Resize
         self.ck_resize = TK.Checkbutton(text=u'resize',font=("",22),variable=self.blv_resize)
         self.ck_resize.grid(row=7,column=2,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
+        # Flash
+        self.ck_flash = TK.Checkbutton(text=u'resize',font=("",22),variable=self.blv_flash)
+        self.ck_flash.grid(row=7,column=4,columnspan=2,padx=dx,pady=20,sticky=TK.W+TK.E)
 
     # LED停止用
     def stop_led(self):
@@ -202,6 +207,7 @@ class GUI(TK.Frame,LED):
         self.led.frame_len = self.frame_len_1
         self.led.bool_scroll = self.blv_scroll.get()
         self.led.bool_resize = self.blv_resize.get()
+        self.led.bool_flash - self.blv_flash.get()
         self.led.stopper = False
         time.sleep(0.5)
         th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
@@ -214,6 +220,7 @@ class GUI(TK.Frame,LED):
         self.led.frame_len = self.frame_len_2
         self.led.bool_scroll = self.blv_scroll.get()
         self.led.bool_resize = self.blv_resize.get()
+        self.led.bool_flash - self.blv_flash.get()
         self.led.stopper = False
         time.sleep(0.5)
         th_led = threading.Thread(target = modules.MediaPlayer.run,args=(self.led,))
